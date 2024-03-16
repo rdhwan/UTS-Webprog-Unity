@@ -1,0 +1,11 @@
+composer.phar
+vendor/
+
+
+# node module
+node_modules/
+
+.env
+
+# ignore output.css
+output.css

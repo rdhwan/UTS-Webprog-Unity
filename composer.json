@@ -1,0 +1,38 @@
+{
+  "name": "kelompok6/uts",
+  "description": "UTS Webprog Kelompok 6",
+  "type": "project",
+  "license": "GPL",
+  "authors": [
+    {
+      "name": "Albert Tirto Kusumo (00000068083)",
+      "email": "albert.tirto@student.umn.ac.id"
+    },
+    {
+      "name": "Alvin Yohanes Kristianto (00000069115)",
+      "email": "alvin.yohanes@student.umn.ac.id"
+    },
+    {
+      "name": "Dimas Takeda Wukir Tirtowidjojo (00000068930)",
+      "email": "dimas.takeda@student.umn.ac.id"
+    },
+    {
+      "name": "Muhammad Fathan Ridhwan (00000069524)",
+      "email": "muhammad.fathan2@student.umn.ac.id"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Kelompok6\\Uts\\": "src/",
+      "Kelompok6\\Uts\\Models\\": "src/models/"
+    },
+    "classmap": [
+      "src/Database/Models/"
+    ]
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "illuminate/database": "10.x-dev",
+    "vlucas/phpdotenv": "^5.6@dev"
+  }
+}
