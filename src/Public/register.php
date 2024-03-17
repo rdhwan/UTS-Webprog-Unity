@@ -11,18 +11,18 @@
 </head>
 
 <body class="flex flex-row justify-end min-h-screen min-w-full font-inter">
-    <div class="invisible md:visible flex flex-1 bg-[url('../images/loginBg.png')] bg-no-repeat bg-cover"></div>
-    <div class="flex flex-col w-full md:w-[60%] h-screen items-center">
-        <div class="flex flex-col justify-center items-start w-full pt-[2rem] pl-[2rem]">
+    <div class="invisible lg:visible flex flex-1 bg-[url('../images/loginBg.png')] bg-no-repeat bg-cover"></div>
+    <div class="flex flex-col w-full lg:w-[60%] h-screen items-center">
+        <div class="flex flex-col justify-center items-center lg:items-start w-full pt-[2rem] pl-[2rem]">
             <img src="./images/logo.png" alt="logo" class="w-32 items-center justify-center">
         </div>
         <div class="flex flex-col w-[60%] items-center justify-center">
-            <div class="flex text-md font-bold text-4xl text-[#E178C5]">
+            <div class="flex text-md font-bold text-center text-4xl text-[#E178C5]">
                 Create an Account
             </div>
             <div class="flex text-sm text-[rgb(175,175,175)]">Register yourself today!</div>
         </div>
-        <div class="flex flex-row items-center justify center w-full">
+        <div class="flex flex-col lg:flex-row items-center justify center w-full">
             <div class="flex flex-1 flex-col align-center justify-center gap-4 w-full p-[2rem]">
                 <span class="font-light text-xl text-[#FF8E8F]">Full Name</span>
                 <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
@@ -79,7 +79,7 @@
                 <span class="font-light text-xl text-[#FF8E8F]">Upload Payment Proof</span>
                 <label class="flex flex-row bg-transparent rounded-none w-full">
                     <i class="ph ph-file-arrow-up opacity-35 text-4xl"></i>
-                    <input type="file" name="payment" class="w-full bg-transparent" />
+                    <input type="file" name="payment" class="file-input file-input-ghost text-[rgb(175,175,175)]" />
                 </label>
             </div>
 
@@ -87,7 +87,7 @@
         <div class="flex flex-col w-full items-center justify-center">
             <div class="flex justify-center w-[60%] h-[6rem] bg-red-400 my-[2rem]"></div>
             <button
-                class="flex justify-center items-center w-[30%] h-[4rem] bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[3rem] text-[#FFFDCB] font-bold text-3xl">Register</button>
+                class="flex justify-center items-center h-[4rem] bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[3rem] text-[#FFFDCB] font-bold text-3xl px-[4rem]">Register</button>
             <div class="flex text-sm text-[rgb(175,175,175)]">Already have an account? <a href="./login.php"
                     class="text-[#E178C5] font-bold pl-1"> Login</a></div>
         </div>
