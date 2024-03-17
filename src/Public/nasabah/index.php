@@ -17,14 +17,38 @@
     <div class="flex flex-col px-[5rem]">
 
         <!-- container navbar -->
-        <div class="flex flex-1 flex-row border-2 border-black py-[1rem] pt-[1.5rem]">
+        <div class="flex flex-row border-2 border-black py-[1rem] pt-[1.5rem]">
             <img src="../images/logo.png" class="w-36 md:w-24" />
             <div class="flex flex-row items-center font-semibold text-lg text-[#E178C5] w-full">
                 <div class="basis-1/4 justify-center items-center border-2 border-blue-500">
                     <p class="text-center">History</p>
                 </div>
                 <div class="basis-1/4 justify-center items-center border-2 border-blue-500">
-                    <p>payment</p>
+                    <div class="flex flex-row justify-center items-center">    
+                        <div>
+                            <details class="dropdown">
+                                <summary class="btn font-semibold text-lg text-[#E178C5] ">
+                                    <p>payment</p>
+                                    <img src="../images/background/dropdownBtn.svg" class="w-4 p-0 md:w-3" />
+                                </summary>
+                                <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                                <li>
+                                    <div>
+                                        <p class="ph ph-wallet text-xl"></p>
+                                        <a>Tabungan Wajib</a>
+                                    </div>
+                                </li> 
+                                <li>
+                                    <div class="text-[#FF8E8F]">
+                                        <p class="ph ph-hand-coins text-xl"></p>
+                                        <a>Tabungan Sukarela</a>
+                                    </div>
+                                </li>
+                                </ul>
+                            </details>
+                        </div> 
+                    </div>
+                    
                 </div>
                 <div class="basis-full items-center border-2 border-blue-500 text-right text-base flex flex-row-reverse">
                 <div>
