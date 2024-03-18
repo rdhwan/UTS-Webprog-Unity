@@ -128,15 +128,101 @@ require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
 
     <!-- content -->
-    <div class="flex flex-1 h-full my-4">
-        <p>bejier</p>
-    </div>
+    <div class="flex flex-1 h-full my-4 justify-center items-center">
+        <div
+            class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 w-75 h-auto rounded-2xl shadow-lg">
+            <div class="bg-[#f6f6f6] rounded-xl md:p-[1.5rem] p-[1rem]">
+                <div class="flex justify-between">
+                    <span class="md:text-3xl text-xl font-bold text-[#FF8E8F] pt-[1rem] pl-[1rem]">
+                        Edit User Profile
+                    </span>
+                    <a href="profile.php" class="flex-column justify-center mb-5 items-center ">
+                        <i class="mb-1 flex justify-center ph-bold ph-x text-center  text-[#1F1F1F]/35"></i>
+                        <p class="text-sm text-[#FF8E8F] font-bold hidden sm:block">ESC</p>
+                    </a>
+                </div>
+                <div class="flex flex-col lg:flex-row items-center justify center w-full">
+                    <div class="flex flex-1 flex-col align-center justify-center gap-4 w-full p-[1rem]">
+                        <span class="font-light text-[#FF8E8F]">Full Name</span>
+                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                            <i class="ph ph-user opacity-35 text-2xl"></i>
+                            <input type="text" required name="fullname" class="w-full bg-transparent"
+                                placeholder="Type your full name" />
+                        </label>
+                        <span class="font-light text-[#FF8E8F]">Username</span>
+                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                            <i class="ph ph-user opacity-35 text-2xl"></i>
+                            <input type="username" required name="username" class="w-full bg-transparent"
+                                placeholder="Type your username" />
+                        </label>
+                        <span class="font-light text-[#FF8E8F]">Password</span>
+                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                            <i class="ph ph-lock opacity-35 text-2xl"></i>
+                            <input type="password" required name="password" class="w-full bg-transparent"
+                                placeholder="Type your password" />
+                        </label>
+                        <span class="font-light text-[#FF8E8F]">Email</span>
+                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                            <i class="ph ph-at opacity-35 text-2xl"></i>
+                            <input required type="email" name="email" class="w-full bg-transparent"
+                                placeholder="Type your email" />
+                        </label>
+                    </div>
+                    <div class="flex flex-1 flex-col align-center justify-center gap-4 w-full p-[1rem]">
+                        <span class="font-light text-[#FF8E8F]">Address</span>
+                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                            <i class="ph ph-map-pin opacity-35 text-2xl"></i>
+                            <input required type="text" name="address" class="w-full bg-transparent"
+                                placeholder="Type your address" />
+                        </label>
+                        <span class="font-light text-[#FF8E8F]">Gender</span>
+                        <label class="flex flex-row bg-transparent rounded-none w-full">
+                            <div class="form-control">
+                                <label class="label cursor-pointer">
+                                    <input type="radio" name="gender" value="L"
+                                        class="radio checked:bg-[rgb(175,175,175)]" />
+                                    <span class="label-text text-[rgb(175,175,175)] ml-[1rem]">Male</span>
+                                </label>
+                            </div>
+                            <div class="form-control">
+                                <label class="label cursor-pointer">
+                                    <input type="radio" name="gender" value="P"
+                                        class="radio checked:bg-[rgb(175,175,175)] ml-[1rem]" checked />
+                                    <span class="label-text text-[rgb(175,175,175)] ml-[1rem]">Female</span>
+                                </label>
+                            </div>
+                        </label>
+                        <span class="font-light text-[#FF8E8F]">Date of Birth</span>
+                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                            <i class="ph ph-calendar opacity-35 text-2xl"></i>
+                            <input required type="date" name="birthdate"
+                                class="w-full bg-transparent text-[rgb(175,175,175)]"
+                                placeholder="Enter your birthdate" />
+                        </label>
+                        <div class="flex flex-col">
+                            <p class="text-[#E178C5] font-bold">Change Your Password</p>
+                            <a href="reset-password.php">
+                                <button
+                                    class="flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
+                                    Reset
+                                    Password</button>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- <div class="flex">
+                    <div class="flex-col"></div>
+                    <div class="flex-col"></div>
+                </div> -->
+
+                </div>
+            </div>
+        </div>
 
 
-    <footer
-        class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-        <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
-    </footer>
+        <footer
+            class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
+            <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
+        </footer>
 
 </body>
 
