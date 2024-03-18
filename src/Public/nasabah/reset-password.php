@@ -129,8 +129,41 @@ require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
 
     <!-- content -->
-    <div class="flex flex-1 h-full my-4">
-        <p>bejier</p>
+    <div class="flex flex-1 h-full my-4 justify-center items-center">
+        <div
+            class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 w-[30rem] h-auto rounded-2xl shadow-lg">
+            <div class="bg-[#f6f6f6] rounded-xl md:p-[2rem] p-[1rem]">
+                <div class="flex justify-between">
+                    <span class="md:text-3xl text-xl font-bold text-[#FF8E8F]">
+                        Reset Password
+                    </span>
+                    <a href="profile.php" class="flex-column justify-center mb-5 items-center ">
+                        <i class="mb-1 flex justify-center ph-bold ph-x text-center  text-[#1F1F1F]/35"></i>
+                        <p class="text-sm text-[#FF8E8F] font-bold hidden sm:block">ESC</p>
+                    </a>
+                </div>
+                <div class="mb-5"><span class="font-light text-[#FF8E8F]">New Password</span>
+                    <label class="my-5 flex flex-row bg-transparent rounded-none border-b-2 pb-2 w-full">
+                        <i class="ph ph-lock opacity-35 text-2xl me-3"></i>
+                        <input type="password" required name="password" class=" w-full bg-transparent"
+                            placeholder="Type new password" />
+                    </label>
+                </div>
+                <div class="my-5"><span class="font-light text-[#FF8E8F]">Confirm Password</span>
+                    <label class="my-5 flex flex-row bg-transparent rounded-none border-b-2 pb-2 w-full">
+                        <i class="ph ph-lock opacity-35 text-2xl me-3"></i>
+                        <input type="password" required name="password" class="w-full bg-transparent"
+                            placeholder="Confirm new password" />
+                    </label>
+                </div>
+                <a href="reset-password.php">
+                    <button
+                        class="mt-5 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
+                        Change
+                        Password</button>
+                </a>
+            </div>
+        </div>
     </div>
 
 

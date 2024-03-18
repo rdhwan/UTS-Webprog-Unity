@@ -127,23 +127,72 @@ require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
     <!-- content -->
     <div class="flex flex-1 h-full my-4 justify-center items-center">
-        <div class="flex flex-col bg-black w-64 h-auto p-5">
-            <div class="flex justify-around">
-                <span class="text-2xl font-bold text-[#FF8E8F] m-5">
-                    My Account
-                </span>
-
-            </div>
-            <div class="flex">
-                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 mr-[5rem]" />
-                <div class="md:flex flex-col items-start">
-                    <p class="font-semibold text-[#E178C5]">
-                        <?= $user["nama"] ?>
-                    </p>
-                    <p class="font-light text-[#E178C5]/50">Nasabah</p>
+        <div
+            class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 md:w-[40rem] w-[18rem] h-auto rounded-2xl shadow-lg">
+            <div class="bg-[#f6f6f6] rounded-xl md:p-[2rem] p-[1rem]">
+                <div class="flex justify-between">
+                    <span class="text-3xl font-bold text-[#FF8E8F]">
+                        My Account
+                    </span>
+                    <a href="index.php" class="flex-column justify-center mb-5 items-center ">
+                        <i class="mb-1 flex justify-center ph-bold ph-x text-center  text-[#1F1F1F]/35"></i>
+                        <p class="text-sm text-[#FF8E8F] font-bold hidden sm:block">ESC</p>
+                    </a>
                 </div>
+                <div class="md:flex flex-column md:justify-between">
+                    <div class="flex">
+                        <img src="../images/profile/dummyProfile.svg" class="md:w-18 mr-5" />
+                        <div class="flex items-center">
+                            <div class="md:flex flex-col items-start text-lg">
+                                <p class="font-semibold text-[#E178C5]">
+                                    <?= $user["nama"] ?>
+                                </p>
+                                <p class="font-light text-[#E178C5]/50">Nasabah</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="flex justify-content-end items-center">
+                        <a href="edit.php">
+                            <button
+                                class="shadow-lg md:ms-5 ms-0 md:mt-0 mt-5 flex justify-center items-center h-[2rem] w-[10rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm">
+                                Edit User Profile
+                            </button>
+                        </a>
+                    </div>
+
+                </div>
+                <hr class="my-2 border-[#FF8E8F] w-full mt-5" />
+                <div class="md:flex flex-column ">
+                    <form>
+                        <div class="flex flex-col">
+                            <p class="text-[#E178C5] mt-5 font-bold">Change Profile Picture</p>
+                            <label class="flex flex-row items-center bg-transparent rounded-none w-full">
+                                <i class="ph ph-file-arrow-up opacity-35 text-2xl"></i>
+                                <input required type="file" name="newprofilepict"
+                                    class="file-input file-input-sm file-input-ghost text-[rgb(175,175,175)]" />
+                            </label>
+                            <button type="submit"
+                                class="shadow-lg mt-1 flex justify-center items-center h-[2rem] w-[5rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm">
+                                SAVE
+                            </button>
+                        </div>
+                    </form>
+                    <div class="flex flex-col sm:ms-0 md:ms-5">
+                        <p class="text-[#E178C5] mt-3 font-bold">Change Your Password</p>
+                        <a href="reset-password.php">
+                            <button
+                                class="my-2 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
+                                Reset
+                                Password</button>
+                        </a>
+                    </div>
+                </div>
+                <a href="../logout.php" class="flex items-center justify-end mt-5">
+                    <i class="ph-bold ph-sign-out text-md text-[#FF8E8F]"></i>
+                    <p class="text-[#FF8E8F] ms-2 font-bold">Logout</p>
+                </a>
             </div>
-            <hr class="my-2 border-[#E178C5] w-full" />
         </div>
     </div>
 
