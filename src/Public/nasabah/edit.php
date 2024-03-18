@@ -2,7 +2,6 @@
 // @albert
 require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
-
 ?>
 
 
@@ -123,28 +122,14 @@ require_once __DIR__ . "/../../Middleware/checkNasabah.php";
                 </li>
             </ul>
         </details>
+
     </div>
 
-    <!-- content -->
-    <div class="flex flex-1 h-full my-4 justify-center items-center">
-        <div class="flex flex-col bg-black w-64 h-auto p-5">
-            <div class="flex justify-around">
-                <span class="text-2xl font-bold text-[#FF8E8F] m-5">
-                    My Account
-                </span>
 
-            </div>
-            <div class="flex">
-                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 mr-[5rem]" />
-                <div class="md:flex flex-col items-start">
-                    <p class="font-semibold text-[#E178C5]">
-                        <?= $user["nama"] ?>
-                    </p>
-                    <p class="font-light text-[#E178C5]/50">Nasabah</p>
-                </div>
-            </div>
-            <hr class="my-2 border-[#E178C5] w-full" />
-        </div>
+
+    <!-- content -->
+    <div class="flex flex-1 h-full my-4">
+        <p>bejier</p>
     </div>
 
 
