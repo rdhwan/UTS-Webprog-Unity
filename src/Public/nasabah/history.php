@@ -138,21 +138,24 @@ if ($user->role !== "nasabah") {
     <!-- content -->
     <div class="flex flex-1 h-full my-4 justify-center">
         <div
-            class="flex flex-col lg:flex-row rounded-3xl bg-gradient-to-b from-[#E178C5] to-[#FFB38E] w-[62rem] h-[36rem] mt-[4rem] justify-center items-center">
-            <div class="flex flex-row items-center lg:items-stretch lg:flex-col w-[15%] mt-[2rem] lg:mt-[6rem]">
+            class="flex flex-1 flex-col md:flex-row mb-12 md:mb-4 rounded-3xl bg-gradient-to-b from-[#E178C5] to-[#FFB38E] justify-center items-center p-8 pt-2 md:pb-8 md:py-12 md:pr-12 md:pl-2">
+            <div
+                class="flex flex-row md:flex-row-reverse md:self-end m-4 md:m-8 md:[writing-mode:vertical-lr] md:rotate-180">
                 <i
-                    class="ph ph-clock-counter-clockwise text-3xl md:text-7xl text-[#FFFDCB] lg:mb-[10rem] lg:ml-[3rem]"></i>
-                <div class="flex text-3xl md:text-7xl font-bold text-[#FFFDCB] lg:-rotate-90">
+                    class="ph ph-clock-counter-clockwise text-5xl md:text-7xl text-[#FFFDCB] my-0 mx-2 md:mx-0 md:my-2"></i>
+                <div class="flex text-5xl md:text-7xl font-bold text-[#FFFDCB]">
                     History
                 </div>
             </div>
-            <div class="flex justify-center items-center w-[75%] h-[32rem] bg-white my-[2rem] lg:mr-[4rem]"></div>
+            <div class="flex justify-center items-center w-full h-full bg-white rounded-2xl shadow-lg"></div>
+        </div>
+    </div>
 
 
-            <footer
-                class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-                <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
-            </footer>
+    <footer
+        class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
+        <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
+    </footer>
 
 </body>
 
