@@ -5,9 +5,9 @@ if (isset ($_COOKIE["token"]) && $user = User::where("remember_token", "=", $_CO
     $_SESSION["error"] = "You are already signed in.";
 
     if ($user->role === "admin") {
-        header("Location: /src/Public/admin/index.php");
+        header("Location: UTSlec/UTS-Webprog-Unity/src/Public/admin/index.php");
     } else {
-        header("Location: /src/Public/nasabah/index.php");
+        header("Location: UTSlec/UTS-Webprog-Unity/src/Public/nasabah/index.php");
     }
     exit;
 }

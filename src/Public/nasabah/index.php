@@ -68,7 +68,7 @@ if ($user->role !== "nasabah") {
 
 
         <div class="hidden md:flex flex-row items-center gap-8">
-            <a href="/src/Public/nasabah/index.php">
+            <a href="index.php">
                 <img src="../images/logo.png" class="w-36 md:w-24" />
             </a>
 
@@ -80,13 +80,13 @@ if ($user->role !== "nasabah") {
                 </summary>
                 <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                     <li>
-                        <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
+                        <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold text-base">
                             <i class="ph ph-wallet text-xl"></i>
                             Tabungan Wajib
                         </a>
                     </li>
                     <li>
-                        <a href="/src/Public/nasabah/sukarela.php" class="text-[#FFB38E] font-semibold">
+                        <a href="/src/Public/nasabah/sukarela.php" class="text-[#FFB38E] font-semibold text-base">
                             <i class="ph ph-hand-coins text-xl"></i>
                             Tabungan Sukarela
                         </a>
@@ -98,32 +98,32 @@ if ($user->role !== "nasabah") {
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11" />
-                <div class="hidden md:flex flex-col items-start">
-                    <p class="font-semibold text-[#E178C5]">
-                        <?= $user["nama"] ?>
-                    </p>
-                    <p class="font-light text-[#E178C5]/50">Nasabah</p>
+                <div class="hidden md:flex flex-col mr-1">
+                        <p class="font-semibold text-[#E178C5] text-right">
+                            <?= $user["nama"] ?>
+                        </p>
+                        <p class="font-light text-[#E178C5]/50 mt-1 text-right">Nasabah</p>
                 </div>
+                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11" />
             </summary>
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                <div class="flex md:hidden flex-col p-4">
+                <div class="flex md:hidden flex-col p-4 ">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
-                    </p>
+                    </p> 
                     <p class="font-light text-[#E178C5]/50">Nasabah</p>
 
                     <hr class="my-2 border-[#E178C5] w-full" />
                 </div>
 
                 <li>
-                    <div>
+                    <div class="text-[#E178C5] text-base">
                         <p class="ph ph-pencil-simple-line text-xl"></p>
                         <a href="./profile.php">Edit profile</a>
                     </div>
                 </li>
                 <li>
-                    <div class="text-[#FF8E8F]">
+                    <div class="text-[#FF8E8F] text-base">
                         <p class="ph ph-sign-out text-xl"></p>
                         <a href="../logout.php">Logout</a>
                     </div>
@@ -136,8 +136,20 @@ if ($user->role !== "nasabah") {
 
 
     <!-- content -->
-    <div class="flex flex-1 h-full my-4">
-        <p>bejier</p>
+    <div class="flex flex-1 h-full my-4 flex-row gap-8">
+        <div class="flex flex-col w-full justify-center items-center">
+            <div class="flex w-[100%] h-[100%] rounded-[1rem] mb-[2.5rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg">
+                <p>pepeek</p>
+            </div>
+        </div>
+        <div class="flex border-2 border-blue-900 flex-col w-[140%]">
+            <div class="flex-1 border-2 border-red-900 ">
+                <p>pepek</p>
+            </div>
+            <div class="flex-1 border-2 border-red-900 ">
+                <p>pepek</p>
+            </div>
+        </div>
     </div>
 
 
