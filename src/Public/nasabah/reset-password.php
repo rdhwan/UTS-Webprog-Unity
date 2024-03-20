@@ -2,28 +2,32 @@
 require_once __DIR__ . "/../../bootstrap.php";
 require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newPassword = $_POST["password"];
     $confirmPassword = $_POST["confirm_password"];
 
     if ($newPassword === $confirmPassword) {
-        $userId = $_SESSION["user_id"];
-        $user = User::find($userId);
-        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        $user->password = $hashedPassword;
-        $user->save();
-        $_SESSION["error"] = "Passwords changed successfully!";
-        header("Location: reset-password.php");
-        exit;
+        if (strlen($newPassword) >= 8 && preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/", $newPassword)) {
+            $userId = $_SESSION["user_id"];
+            $user = User::find($userId);
+            $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+            $user->password = $hashedPassword;
+            $user->save();
+            $_SESSION["success"] = "Password changed successfully!";
+            header("Location: reset-password.php");
+            exit;
+        } else {
+            $_SESSION["error"] = "Password must contain at least 8 characters, including uppercase letters and numbers.";
+            header("Location: reset-password.php");
+            exit;
+        }
     } else {
-        $_SESSION["error"] = "Passwords don't match or empty.";
+        $_SESSION["error"] = "Passwords don't match or are empty.";
         header("Location: reset-password.php");
         exit;
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
