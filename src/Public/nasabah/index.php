@@ -39,14 +39,14 @@ $sukarela = $kategoriSuka->sum('jumlah');
     <!-- navbar -->
     <div class="flex flex-row items-center justify-between gap-8">
 
-        <details class="visible md:hidden dropdown">
+        <details class="visible md:hidden dropdown ">
             <summary class="btn btn-ghost text-[#E178C5]">
                 <i class="ph ph-list text-4xl"></i>
             </summary>
-            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 mt-4">
                 <li>
                     <a href="./history.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5] mt-4">History
                     </a>
                 </li>
                 <li>

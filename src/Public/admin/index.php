@@ -2,6 +2,16 @@
 
 require_once __DIR__ . "/../../Middleware/checkAdmin.php";
 
+//Cek pokok
+$kategoriPokok = History::where('kategori', 'pokok')->where('status', "verified")->get();
+$pokok = $kategoriPokok->sum('jumlah');
+
+$kategoriWajib = History::where('kategori', 'wajib')->where('status', "verified")->get();
+$wajib = $kategoriWajib->sum('jumlah');
+
+$kategoriSuka = History::where('kategori', 'sukarela')->where('status', "verified")->get();
+$sukarela = $kategoriSuka->sum('jumlah');
+
 ?>
 
 
@@ -79,13 +89,13 @@ require_once __DIR__ . "/../../Middleware/checkAdmin.php";
                 </div>
 
                 <li>
-                    <div>
+                    <div class="text-[#E178C5] text-base">
                         <p class="ph ph-pencil-simple-line text-xl"></p>
                         <a href="./profile.php">Edit profile</a>
                     </div>
                 </li>
                 <li>
-                    <div class="text-[#FF8E8F]">
+                    <div class="text-[#FF8E8F] text-base">
                         <p class="ph ph-sign-out text-xl"></p>
                         <a href="../logout.php">Logout</a>
                     </div>
@@ -98,8 +108,67 @@ require_once __DIR__ . "/../../Middleware/checkAdmin.php";
 
 
     <!-- content -->
-    <div class="flex flex-1 h-full my-4">
-        <p>bejier</p>
+    <div class="flex flex-1 h-full my-4 flex-col lg:flex-row gap-8">
+        <div class="flex flex-col w-full justify-center items-center ml-0 lg:ml-2">
+            <div class="flex w-[100%] h-[100%] rounded-[1rem] mb-0 lg:mb-[2.5rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg">
+                <div class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[3rem] text-2xl justify-between pr-2 lg:pr-0">
+                    <div class="lg:mb-0 mb-10">
+                        <p class="text-2xl font-light">Tabungan</p>
+                        <p class="text-[3.8rem] font-semibold mt-[1rem]">POKOK</p>
+                    </div>
+                    <div class="lg:mb-0 mb-8">
+                        <p class="text-[1.75rem] md:text-[2rem] font-semibold">Rp.</p>
+                        <p class="text-[3.5rem] md:text-[3.8rem] font-bold mt-4">
+                            <?= number_format($pokok, 0, ',', '.'); ?>
+                            </p>
+                    </div>
+                    <div>
+                        <p class="text-xl md:text-2xl font-light italic">Setoran awal saat bergabung, <br>
+                        berperan sebagai modal awal koperasi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col w-[100%] mb-[2.5rem] mr-[2rem]">
+            <div class="flex-1 flex flex-col justify-between">
+                <div class="flex w-full h-[100%] rounded-[1rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg mb-[1rem]" >
+                        <div class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[1rem] text-2xl justify-between w-full py-2 mr-4 lg:mr-0">
+                            <div class="flex lg:mb-0 mb-8 lg:mt-0 mt-3">
+                                <p class="text-4xl md:text-5xl font-semibold">WAJIB</p>
+                            </div>
+                            <div class="lg:mb-0 mb-8">
+                                <p class="text-[1.75rem] md:text-[2rem] font-semibold">Rp.</p>
+                                <p class="text-[3.5rem] md:text-[3.8rem] font-bold mt-4">
+                                    <?= number_format($wajib, 0, ',', '.'); ?>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="text-xl md:text-2xl font-light italic">Setoran bulanan yang wajib, mendukung<br>
+                                    keberlanjutan operasional koperasi.</p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col justify-between">
+                <div class="flex w-full h-full rounded-[1rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg" >
+                    <div class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[1rem] text-2xl justify-between w-full py-2 mr-4 lg:mr-0">
+                        <div class="flex lg:mb-0 mb-8 lg:mt-0 mt-3">
+                            <p class="text-4xl md:text-5xl font-semibold">SUKARELA</p>
+                        </div>
+                        <div class="lg:mb-0 mb-8">
+                            <p class="text-[1.75rem] md:text-[2rem] font-semibold">Rp.</p>
+                            <p class="text-[3.5rem] md:text-[3.8rem] font-bold mt-4">
+                                <?= number_format($sukarela, 0, ',', '.'); ?>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xl md:text-2xl font-light italic">Setoran sukarela memberikan fleksibilitas kepada  <br>
+                                anggota karena dapat dilakukan kapan saja</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
