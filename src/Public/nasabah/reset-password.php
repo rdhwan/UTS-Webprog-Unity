@@ -1,9 +1,5 @@
 <?php
-require_once __DIR__ . "/../../bootstrap.php";
 require_once __DIR__ . "/../../Middleware/checkNasabah.php";
-
-$error = "";
-$success = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newPassword = $_POST["password"];
@@ -11,8 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($newPassword === $confirmPassword) {
         if (strlen($newPassword) >= 8 && preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/", $newPassword)) {
-            $userId = $_SESSION["user_id"];
-            $user = User::find($userId);
+            $token = $_COOKIE["token"];
             $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
             $user->password = $hashedPassword;
             $user->save();
@@ -30,6 +25,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 }
+
+$error = $_SESSION["error"] ?? null;
+$success = $_SESSION["success"] ?? null;
+
+$_SESSION["error"] = null;
+$_SESSION["success"] = null;
+
 ?>
 
 <!DOCTYPE html>
@@ -54,15 +56,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li>
-                    <a href="./history.php" class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
+                    <a href="./history.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
                     </a>
                 </li>
                 <li>
                     <details class="dropdown">
-                        <summary class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">
+                        <summary
+                            class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">
                             <p>Payment</p>
                         </summary>
-                        <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                        <ul tabindex="0"
+                            class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                             <li>
                                 <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
                                     <i class="ph ph-wallet text-xl"></i>
@@ -114,7 +119,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11" />
+                <?php if (!empty ($user["profile_picture"])): ?>
+                <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <?php else: ?>
+                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
@@ -153,7 +162,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- content -->
     <div class="flex flex-1 h-full my-4 justify-center items-center">
-        <div class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 w-[30rem] h-auto rounded-2xl shadow-lg">
+        <div
+            class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 w-[30rem] h-auto rounded-2xl shadow-lg">
             <div class="bg-[#f6f6f6] rounded-xl md:p-[2rem] p-[1rem]">
                 <div class="flex justify-between">
                     <span class="md:text-3xl text-xl font-bold text-[#FF8E8F]">
@@ -169,23 +179,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <span class="font-light text-[#FF8E8F]">New Password</span>
                         <label class="my-5 flex flex-row bg-transparent rounded-none border-b-2 pb-2 w-full">
                             <i class="ph ph-lock opacity-35 text-2xl me-3"></i>
-                            <input type="password" required name="password" class="w-full bg-transparent" placeholder="Type new password" />
+                            <input type="password" required name="password" class="w-full bg-transparent"
+                                placeholder="Type new password" />
                         </label>
                     </div>
                     <div class="my-5">
                         <span class="font-light text-[#FF8E8F]">Confirm Password</span>
                         <label class="my-5 flex flex-row bg-transparent rounded-none border-b-2 pb-2 w-full">
                             <i class="ph ph-lock opacity-35 text-2xl me-3"></i>
-                            <input type="password" required name="confirm_password" class="w-full bg-transparent" placeholder="Confirm new password" />
+                            <input type="password" required name="confirm_password" class="w-full bg-transparent"
+                                placeholder="Confirm new password" />
                         </label>
                     </div>
-                    <?php if (isset($error) && $error) : ?>
-                        <p class="text-red-400"><?= $error ?></p>
+                    <?php if (isset ($error) && $error): ?>
+                    <p class="text-red-400">
+                        <?= $error ?>
+                    </p>
                     <?php endif; ?>
-                    <?php if (isset($success) && $success) : ?>
-                        <p class="text-green-400"><?= $success ?></p>
+                    <?php if (isset ($success) && $success): ?>
+                    <p class="text-green-400">
+                        <?= $success ?>
+                    </p>
                     <?php endif; ?>
-                    <button type="submit" class="mt-5 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg">
+                    <button type="submit"
+                        class="mt-5 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg">
                         Change Password
                     </button>
                 </form>
@@ -194,7 +211,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
 
-    <footer class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
+    <footer
+        class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
         <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
     </footer>
 

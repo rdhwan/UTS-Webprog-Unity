@@ -3,7 +3,7 @@
 require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (isset($_FILES['newprofilepict']) && $_FILES['newprofilepict']['error'] === UPLOAD_ERR_OK) {
+    if (isset ($_FILES['newprofilepict']) && $_FILES['newprofilepict']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = __DIR__ . "/../images/profile/";
         $uploadFile = $uploadDir . basename($_FILES['newprofilepict']['name']);
         $imageFileType = strtolower(pathinfo($uploadFile, PATHINFO_EXTENSION));
@@ -35,8 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
-        $userId = $_SESSION["user_id"];
-        $user = User::find($userId);
         $user->profile_picture = $newProfilePic;
         $user->save();
 
@@ -73,15 +71,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li>
-                    <a href="./history.php" class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
+                    <a href="./history.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
                     </a>
                 </li>
                 <li>
                     <details class="dropdown">
-                        <summary class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">
+                        <summary
+                            class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">
                             <p>Payment</p>
                         </summary>
-                        <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                        <ul tabindex="0"
+                            class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                             <li>
                                 <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
                                     <i class="ph ph-wallet text-xl"></i>
@@ -133,7 +134,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11" />
+                <?php if (!empty ($user["profile_picture"])): ?>
+                    <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <?php else: ?>
+                    <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
@@ -169,7 +174,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- content -->
     <div class="flex flex-1 h-full my-4 justify-center items-center">
-        <div class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 md:w-[40rem] w-[18rem] h-auto rounded-2xl shadow-lg">
+        <div
+            class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 md:w-[40rem] w-[18rem] h-auto rounded-2xl shadow-lg">
             <div class="bg-[#f6f6f6] rounded-xl md:p-[2rem] p-[1rem]">
                 <div class="flex justify-between">
                     <span class="text-3xl font-bold text-[#FF8E8F]">
@@ -182,7 +188,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
                 <div class="md:flex flex-column md:justify-between">
                     <div class="flex">
-                        <img src="../images/profile/dummyProfile.svg" class="md:w-18 mr-5" />
+                        <?php if (!empty ($user["profile_picture"])): ?>
+                            <img src="../images/profile/<?= $user["profile_picture"] ?>"
+                                class="w-20 h-20 object-cover mr-5 rounded-full" />
+                        <?php else: ?>
+                            <img src="../images/profile/dummyProfile.svg"
+                                class="w-20 h-20 object-cover mr-5 rounded-full" />
+                        <?php endif; ?>
                         <div class="flex items-center">
                             <div class="md:flex flex-col items-start text-lg">
                                 <p class="font-semibold text-[#E178C5]">
@@ -195,7 +207,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                     <div class="flex justify-content-end items-center">
                         <a href="edit.php">
-                            <button class="shadow-lg md:ms-5 ms-0 md:mt-0 mt-5 flex justify-center items-center h-[2rem] w-[10rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm">
+                            <button
+                                class="shadow-lg md:ms-5 ms-0 md:mt-0 mt-5 flex justify-center items-center h-[2rem] w-[10rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm">
                                 Edit User Profile
                             </button>
                         </a>
@@ -208,14 +221,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <div class="flex flex-col">
                             <p class="text-[#E178C5] mt-5 font-bold">Change Profile Picture</p>
                             <form action="profile.php" method="POST" enctype="multipart/form-data">
-                                <label for="newprofilepict" class="flex flex-row items-center bg-transparent rounded-none w-full">
+                                <label for="newprofilepict"
+                                    class="flex flex-row items-center bg-transparent rounded-none w-full">
                                     <i class="ph ph-file-arrow-up opacity-35 text-2xl"></i>
-                                    <input id="newprofilepict" required type="file" name="newprofilepict" class="file-input file-input-sm file-input-ghost text-[rgb(175,175,175)]" aria-label="Choose file">
+                                    <input id="newprofilepict" required type="file" name="newprofilepict"
+                                        class="file-input file-input-sm file-input-ghost text-[rgb(175,175,175)]"
+                                        aria-label="Choose file">
                                 </label>
-                                <?php if (!empty($error)) : ?>
-                                    <p class="text-red-500"><?php echo $error; ?></p>
+                                <?php if (!empty ($error)): ?>
+                                    <p class="text-red-500">
+                                        <?php echo $error; ?>
+                                    </p>
                                 <?php endif; ?>
-                                <button type="submit" class="shadow-lg mt-1 flex justify-center items-center h-[2rem] w-[5rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm" aria-label="Save">
+                                <button type="submit"
+                                    class="shadow-lg mt-1 flex justify-center items-center h-[2rem] w-[5rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm"
+                                    aria-label="Save">
                                     SAVE
                                 </button>
                             </form>
@@ -226,7 +246,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div class="flex flex-col sm:ms-0 md:ms-5">
                         <p class="text-[#E178C5] mt-3 font-bold">Change Your Password</p>
                         <a href="reset-password.php">
-                            <button class="my-2 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
+                            <button
+                                class="my-2 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
                                 Reset
                                 Password</button>
                         </a>
@@ -241,7 +262,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
 
-    <footer class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
+    <footer
+        class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
         <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
     </footer>
 

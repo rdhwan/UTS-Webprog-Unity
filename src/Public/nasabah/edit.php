@@ -1,49 +1,41 @@
 <?php
-require_once __DIR__ . "/../../bootstrap.php";
 require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $fullname = $_POST['fullname'];
-    $username = $_POST['username'];
     $email = $_POST['email'];
     $address = $_POST['address'];
     $gender = $_POST['gender'];
     $birthdate = $_POST['birthdate'];
 
-    if (empty($fullname) || empty($username) || empty($email) || empty($address) || empty($gender) || empty($birthdate)) {
+    if (empty ($fullname) || empty ($email) || empty ($address) || empty ($gender) || empty ($birthdate)) {
         $_SESSION['error'] = 'There is an empty field';
-        header("Location: profile.php");
-        exit;
-    }
-
-    if (strlen($username) < 3 || strlen($username) > 16) {
-        $_SESSION["error"] = "Invalid username. ";
-        header("Location: profile.php");
+        header("Location: edit.php");
         exit;
     }
 
     if (!preg_match("/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/", $email)) {
         $_SESSION["error"] = "Invalid email.";
-        header("Location: profile.php");
+        header("Location: edit.php");
         exit;
     }
 
     $year = explode("-", $birthdate)[0];
     if ($year < 1945) {
         $_SESSION["error"] = "Birth date must be above 1945.";
-        header("Location: register.php");
+        header("Location: edit.php");
         exit;
     }
 
-    $existingUser = User::where("username", "=", $username)->orWhere("email", "=", $email)->first();
-    if (!empty($existingUser) && $existingUser->id !== $user->id) {
+    $existingUser = User::where("email", "=", $email)->first();
+    if (!empty ($existingUser) && $existingUser->id !== $user->id) {
         $_SESSION["error"] = "Username or email already exists.";
-        header("Location: profile.php");
+        header("Location: edit.php");
         exit;
     }
 
     $user->nama = $fullname;
-    $user->username = $username;
+    // $user->username = $username;
     $user->email = $email;
     $user->alamat = $address;
     $user->jenis_kelamin = $gender;
@@ -83,15 +75,18 @@ $_SESSION["error"] = null;
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li>
-                    <a href="./history.php" class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
+                    <a href="./history.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
                     </a>
                 </li>
                 <li>
                     <details class="dropdown">
-                        <summary class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">
+                        <summary
+                            class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">
                             <p>Payment</p>
                         </summary>
-                        <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                        <ul tabindex="0"
+                            class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                             <li>
                                 <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
                                     <i class="ph ph-wallet text-xl"></i>
@@ -143,7 +138,11 @@ $_SESSION["error"] = null;
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11" />
+                <?php if (!empty ($user["profile_picture"])): ?>
+                <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <?php else: ?>
+                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
@@ -182,8 +181,9 @@ $_SESSION["error"] = null;
 
     <!-- content -->
     <div class="flex flex-1 h-full my-4 justify-center items-center">
-        <div class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 w-75 h-auto rounded-2xl shadow-lg">
-            <div class="bg-[#f6f6f6] rounded-xl md:p-[1.5rem] p-[1rem]">
+        <div
+            class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 w-75 h-auto rounded-2xl shadow-lg">
+            <form method="post" class="bg-[#f6f6f6] rounded-xl md:p-[1.5rem] p-[1rem]">
                 <div class="flex justify-between">
                     <span class="md:text-3xl text-xl font-bold text-[#FF8E8F] pt-[1rem] pl-[1rem]">
                         Edit User Profile
@@ -196,38 +196,45 @@ $_SESSION["error"] = null;
                 <div class="flex flex-col lg:flex-row items-center justify center w-full">
                     <div class="flex flex-1 flex-col align-center justify-center gap-4 w-full p-[1rem]">
                         <span class="font-light text-[#FF8E8F]">Full Name</span>
-                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                        <label class="flex flex-row gap-2 bg-transparent rounded-none border-b-2 w-full">
                             <i class="ph ph-user opacity-35 text-2xl"></i>
-                            <input type="text" required name="fullname" class="w-full bg-transparent" placeholder="Type your full name" />
+                            <input type="text" required name="fullname" class="w-full bg-transparent"
+                                placeholder="Type your full name" value="<?= $user["nama"] ?>" />
                         </label>
-                        <span class="font-light text-[#FF8E8F]">Username</span>
-                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
-                            <i class="ph ph-user opacity-35 text-2xl"></i>
-                            <input type="username" required name="username" class="w-full bg-transparent" placeholder="Type your username" />
-                        </label>
+
                         <span class="font-light text-[#FF8E8F]">Email</span>
-                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
+                        <label class="flex flex-row gap-2 bg-transparent rounded-none border-b-2 w-full">
                             <i class="ph ph-at opacity-35 text-2xl"></i>
-                            <input required type="email" name="email" class="w-full bg-transparent" placeholder="Type your email" />
+                            <input required type="email" name="email" class="w-full bg-transparent"
+                                placeholder="Type your email" value="<?= $user["email"] ?>" />
                         </label>
+
+                        <span class="font-light text-[#FF8E8F]">Address</span>
+                        <label class="flex flex-row gap-2 bg-transparent rounded-none border-b-2 w-full">
+                            <i class="ph ph-map-pin opacity-35 text-2xl"></i>
+                            <input required type="text" name="address" class="w-full bg-transparent"
+                                placeholder="Type your address" value="<?= $user["alamat"] ?>" />
+                        </label>
+
+
                     </div>
                     <div class="flex flex-1 flex-col align-center justify-center gap-4 w-full p-[1rem]">
-                        <span class="font-light text-[#FF8E8F]">Address</span>
-                        <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
-                            <i class="ph ph-map-pin opacity-35 text-2xl"></i>
-                            <input required type="text" name="address" class="w-full bg-transparent" placeholder="Type your address" />
-                        </label>
+
                         <span class="font-light text-[#FF8E8F]">Gender</span>
                         <label class="flex flex-row bg-transparent rounded-none w-full">
                             <div class="form-control">
                                 <label class="label cursor-pointer">
-                                    <input type="radio" name="gender" value="L" class="radio checked:bg-[rgb(175,175,175)]" />
+                                    <input type="radio" name="gender" value="L"
+                                        <?php if ($user["jenis_kelamin"] === "L") echo "checked" ?>
+                                        class="radio checked:bg-[rgb(175,175,175)]" />
                                     <span class="label-text text-[rgb(175,175,175)] ml-[1rem]">Male</span>
                                 </label>
                             </div>
                             <div class="form-control">
                                 <label class="label cursor-pointer">
-                                    <input type="radio" name="gender" value="P" class="radio checked:bg-[rgb(175,175,175)] ml-[1rem]" checked />
+                                    <input type="radio" name="gender" value="P"
+                                        class="radio checked:bg-[rgb(175,175,175)] ml-[1rem]"
+                                        <?php if ($user["jenis_kelamin"] === "P") echo "checked" ?> />
                                     <span class="label-text text-[rgb(175,175,175)] ml-[1rem]">Female</span>
                                 </label>
                             </div>
@@ -235,24 +242,45 @@ $_SESSION["error"] = null;
                         <span class="font-light text-[#FF8E8F]">Date of Birth</span>
                         <label class="flex flex-row bg-transparent rounded-none border-b-2 w-full">
                             <i class="ph ph-calendar opacity-35 text-2xl"></i>
-                            <input required type="date" name="birthdate" class="w-full bg-transparent text-[rgb(175,175,175)]" placeholder="Enter your birthdate" />
+                            <input required type="date" name="birthdate"
+                                class="w-full bg-transparent text-[rgb(175,175,175)]" placeholder="Enter your birthdate"
+                                value="<?= $user["tanggal_lahir"] ?>" />
                         </label>
 
+                        <div class="flex flex-col">
+                            <p class="text-[#E178C5] font-bold">Change Your Password</p>
+                            <a href="reset-password.php">
+                                <button
+                                    class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
+                                    Reset
+                                    Password</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="flex flex-col px-5 pb-2 pt-1">
-                    <p class="text-[#E178C5] font-bold">Change Your Password</p>
-                    <a href="reset-password.php">
-                        <button class="flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
-                            Reset
-                            Password</button>
-                    </a>
+                <div class="flex flex-row w-full justify-between items-center p-[1rem]">
+                    <div class="flex">
+                        <?php if (isset ($error) && $error): ?>
+                        <p class="text-red-400">
+                            <?= $error ?>
+                        </p>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="flex">
+                        <button type="submit"
+                            class="shadow-lg mt-1 flex justify-center items-center h-[2rem] w-[5rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm"
+                            aria-label="Save">
+                            SAVE
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
 
 
-        <footer class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
+        <footer
+            class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
             <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
         </footer>
 
