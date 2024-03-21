@@ -1,6 +1,6 @@
 <?php
 // @albert
-require_once __DIR__ . "/../../Middleware/checkNasabah.php";
+require_once __DIR__ . "/../../Middleware/checkAdmin.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset ($_FILES['newprofilepict']) && $_FILES['newprofilepict']['error'] === UPLOAD_ERR_OK) {
@@ -71,32 +71,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li>
+                    <a href="./verification.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Verification
+                    </a>
+                </li>
+                <li>
                     <a href="./history.php"
                         class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
                     </a>
                 </li>
                 <li>
-                    <details class="dropdown">
-                        <summary
-                            class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">
-                            <p>Payment</p>
-                        </summary>
-                        <ul tabindex="0"
-                            class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                            <li>
-                                <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
-                                    <i class="ph ph-wallet text-xl"></i>
-                                    Tabungan Wajib
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/src/Public/nasabah/sukarela.php" class="text-[#FFB38E] font-semibold">
-                                    <i class="ph ph-hand-coins text-xl"></i>
-                                    Tabungan Sukarela
-                                </a>
-                            </li>
-                        </ul>
-                    </details>
+                    <a href="./users.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Users
+                    </a>
                 </li>
             </ul>
         </details>
@@ -108,27 +95,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <img src="../images/logo.png" class="w-36 md:w-24" />
             </a>
 
+            <a href="./verification.php"
+                class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Verification</a>
             <a href="./history.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">History</a>
-            <details class="dropdown">
-                <summary class="btn btn-ghost font-semibold text-lg text-[#E178C5]">
-                    <p>Payment</p>
-                    <img src="../images/background/dropdownBtn.svg" class="w-4 p-0 md:w-3" />
-                </summary>
-                <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                    <li>
-                        <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
-                            <i class="ph ph-wallet text-xl"></i>
-                            Tabungan Wajib
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/src/Public/nasabah/sukarela.php" class="text-[#FFB38E] font-semibold">
-                            <i class="ph ph-hand-coins text-xl"></i>
-                            Tabungan Sukarela
-                        </a>
-                    </li>
-                </ul>
-            </details>
+            <a href="./users.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Users</a>
 
         </div>
 
@@ -143,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
                     </p>
-                    <p class="font-light text-[#E178C5]/50">Nasabah</p>
+                    <p class="font-light text-[#E178C5]/50">Admin</p>
                 </div>
             </summary>
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
@@ -151,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
                     </p>
-                    <p class="font-light text-[#E178C5]/50">Nasabah</p>
+                    <p class="font-light text-[#E178C5]/50">Admin</p>
 
                     <hr class="my-2 border-[#E178C5] w-full" />
                 </div>
@@ -170,6 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </li>
             </ul>
         </details>
+
     </div>
 
     <!-- content -->
