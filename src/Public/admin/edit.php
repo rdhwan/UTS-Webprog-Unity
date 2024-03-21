@@ -251,7 +251,7 @@ $_SESSION["error"] = null;
 
         <footer
             class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-            <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
+            <p class="text-center z-10 p-4">©2024 Unity. All rights reserved.</p>
         </footer>
 
 </body>

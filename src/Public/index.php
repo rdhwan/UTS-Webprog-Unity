@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // get method
-$error = $_SESSION["error"];
+$error = $_SESSION["error"] ?? null;
 $_SESSION["error"] = null;
 
 ?>
@@ -80,7 +80,7 @@ $_SESSION["error"] = null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/output.css">
     <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
-    <title>UnityBook</title>
+    <title>Unity Cooperative</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
@@ -106,9 +106,9 @@ $_SESSION["error"] = null;
                 <div class="flex justify-center w-[60%] h-[6rem] bg-red-400 my-[2rem]"></div>
 
                 <?php if ($error): ?>
-                <p class="text-red-400">
-                    <?= $error ?>
-                </p>
+                    <p class="text-red-400">
+                        <?= $error ?>
+                    </p>
                 <?php endif; ?>
 
                 <button type="submit"

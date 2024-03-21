@@ -5,23 +5,40 @@ require_once __DIR__ . "/../../../Middleware/checkNasabah.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $category = $_POST["category"];
     $transferdate = $_POST["transferdate"];
     $transferamount = $_POST["transferamount"];
-    $payment = $_FILES['payment'];
 
+    $uploadDir = __DIR__ . "/../../images/bukti/";
+    $uploadFile = $uploadDir . basename($_FILES['payment']['name']);
+    $imageFileType = strtolower(pathinfo($uploadFile, PATHINFO_EXTENSION));
 
-    if (empty ($category) || empty ($transferdate) || empty ($transferamount) || empty ($payment)) {
-        $_SESSION['error'] = 'There is an empty field';
+    $check = getimagesize($_FILES["payment"]["tmp_name"]);
+    if ($check === false) {
+        $_SESSION["error"] = "File is not an image.";
         header("Location: wajib.php");
         exit;
     }
 
-    // if (!preg_match("/(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/", $fullname)) {
-    //     $_SESSION["error"] = "Invalid full name.";
-    //     header("Location: register.php");
-    //     exit;
-    // }
+    if ($_FILES["payment"]["size"] > 5 * 1024 * 1024) {
+        $_SESSION["error"] = "Sorry, your file is too large.";
+        header("Location: wajib.php");
+        exit;
+    }
+
+    if ($imageFileType !== "jpg" && $imageFileType !== "png" && $imageFileType !== "jpeg") {
+        $_SESSION["error"] = "Sorry, only JPG, JPEG, PNG files are allowed.";
+        header("Location: wajib.php");
+        exit;
+    }
+
+    $filename = "wajib_" . uniqid() . "." . $imageFileType;
+
+
+    if (empty ($transferdate) || empty ($transferamount) || empty ($filename)) {
+        $_SESSION['error'] = 'There is an empty field';
+        header("Location: wajib.php");
+        exit;
+    }
 
     $year = explode("-", $transferdate)[0];
     if ($year < 1945) {
@@ -30,40 +47,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    if ($payment["error"] !== 0) {
-        $_SESSION["error"] = "Invalid file.";
+    if (!move_uploaded_file($_FILES["payment"]["tmp_name"], $uploadDir . $filename)) {
+        $_SESSION["error"] = "Sorry, there was an error uploading your file.";
         header("Location: wajib.php");
         exit;
     }
 
-    $allowedMimeType = ["image/png", "image/jpeg", "image/jpg"];
-    if (!in_array($payment["type"], $allowedMimeType)) {
-        $_SESSION["error"] = "Invalid file type.";
-        header("Location: register.php");
-        exit;
-    }
-    // create payment
-    $user = User::create([
-        "is_active" => false,
-        "category" => $category,
-        "jumlah_transfer" => $transferamount,
-        "tanggal_transaksi" => $transferdate,
-        "bukti" => $payment,
-    ]);
-
     // create history pokok
     $user->histories()->create([
-        "jenis" => "wajib",
+        "kategori" => "wajib",
         "jumlah" => $transferamount,
-        "bukti" => $payment,
+        "bukti" => $filename,
         "status" => "reviewed",
-        "tanggal" => date("Y-m-d H:i:s")
+        "tanggal" => $transferdate
     ]);
 
     $_SESSION["success"] = "Deposit has been successfully made.";
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit;
 }
+
+
+$kategoriWajib = $user->histories()->where('kategori', 'wajib')->where('status', "verified")->get();
+$wajib = $kategoriWajib->sum('jumlah');
 
 $error = $_SESSION["error"];
 $_SESSION["error"] = null;
@@ -86,14 +92,14 @@ $_SESSION["error"] = null;
     <!-- navbar -->
     <div class="flex flex-row items-center justify-between gap-8">
 
-        <details class="visible md:hidden dropdown">
+        <details class="visible md:hidden dropdown ">
             <summary class="btn btn-ghost text-[#E178C5]">
                 <i class="ph ph-list text-4xl"></i>
             </summary>
-            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52 mt-4">
                 <li>
-                    <a href="../../history.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
+                    <a href="../history.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5] mt-4">History
                     </a>
                 </li>
                 <li>
@@ -125,7 +131,7 @@ $_SESSION["error"] = null;
 
 
         <div class="hidden md:flex flex-row items-center gap-8">
-            <a href="/src/Public/nasabah/index.php">
+            <a href="../index.php">
                 <img src="../../images/logo.png" class="w-36 md:w-24" />
             </a>
 
@@ -137,13 +143,14 @@ $_SESSION["error"] = null;
                 </summary>
                 <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                     <li>
-                        <a href="/src/Public/nasabah/payment/wajib.php" class="text-[#E178C5] font-semibold">
+                        <a href="/src/Public/nasabah/payment/wajib.php" class="text-[#E178C5] font-semibold text-base">
                             <i class="ph ph-wallet text-xl"></i>
                             Tabungan Wajib
                         </a>
                     </li>
                     <li>
-                        <a href="/src/Public/nasabah/payment/sukarela.php" class="text-[#FFB38E] font-semibold">
+                        <a href="/src/Public/nasabah/payment/sukarela.php"
+                            class="text-[#FFB38E] font-semibold text-base">
                             <i class="ph ph-hand-coins text-xl"></i>
                             Tabungan Sukarela
                         </a>
@@ -155,16 +162,20 @@ $_SESSION["error"] = null;
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11" />
-                <div class="hidden md:flex flex-col items-start">
-                    <p class="font-semibold text-[#E178C5]">
+                <div class="hidden md:flex flex-col mr-1">
+                    <p class="font-semibold text-[#E178C5] text-right">
                         <?= $user["nama"] ?>
                     </p>
-                    <p class="font-light text-[#E178C5]/50">Nasabah</p>
+                    <p class="font-light text-[#E178C5]/50 mt-1 text-right">Nasabah</p>
                 </div>
+                <?php if (!empty ($user["profile_picture"])): ?>
+                    <img src="../../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <?php else: ?>
+                    <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <?php endif; ?>
             </summary>
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
-                <div class="flex md:hidden flex-col p-4">
+                <div class="flex md:hidden flex-col p-4 ">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
                     </p>
@@ -174,13 +185,13 @@ $_SESSION["error"] = null;
                 </div>
 
                 <li>
-                    <div>
+                    <div class="text-[#E178C5] text-base">
                         <p class="ph ph-pencil-simple-line text-xl"></p>
                         <a href="./profile.php">Edit profile</a>
                     </div>
                 </li>
                 <li>
-                    <div class="text-[#FF8E8F]">
+                    <div class="text-[#FF8E8F] text-base">
                         <p class="ph ph-sign-out text-xl"></p>
                         <a href="../logout.php">Logout</a>
                     </div>
@@ -189,8 +200,6 @@ $_SESSION["error"] = null;
         </details>
 
     </div>
-
-
 
     <!-- content -->
     <div class="flex flex-1 h-full my-4 justify-center">
@@ -210,14 +219,14 @@ $_SESSION["error"] = null;
                         Rp.
                     </label>
                     <label class="font-bold text-4xl lg:text-6xl text-[#FFFDCB]">
-                        690.000,-
+                        <?= number_format($wajib, 0, ',', '.'); ?>
                     </label>
                 </div>
                 <label class="font-extralight text-4xl italic text-[#FFFDCB]  py-[2rem] md:py-0">
                     Setoran bulanan yang wajib, mendukung keberlanjutan operasional koperasi.
                 </label>
             </div>
-            <di
+            <form method="post" enctype="multipart/form-data"
                 class="flex flex-col justify-evenly w-full lg:w-[50%] h-full bg-white rounded-2xl shadow-lg p-[2rem] lg:px-[4rem]">
                 <label class="font-bold text-2xl lg:text-4xl text-[#E178C5] w-full text-center pb-[1rem] lg:pb-0">
                     Setor Tabungan Wajib</label>
@@ -267,21 +276,21 @@ $_SESSION["error"] = null;
                 </div>
                 <div class="flex flex-col">
                     <?php if ($error): ?>
-                    <p class="text-red-400">
-                        <?= $error ?>
-                    </p>
+                        <p class="text-red-400">
+                            <?= $error ?>
+                        </p>
                     <?php endif; ?>
-                    <button
+                    <button type="submit"
                         class="flex justify-center items-center h-[4rem] bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[3rem] text-[#FFFDCB] font-bold text-3xl px-[4rem] py-[2rem]">Submit</button>
                 </div>
+            </form>
         </div>
-    </div>
 
 
-    <footer
-        class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-        <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
-    </footer>
+        <footer
+            class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
+            <p class="text-center z-10 p-4">©2024 Unity. All rights reserved.</p>
+        </footer>
 </body>
 
 </html>

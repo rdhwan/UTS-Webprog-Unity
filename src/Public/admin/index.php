@@ -37,18 +37,13 @@ $sukarela = $kategoriSuka->sum('jumlah');
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li>
-                    <a href="./verification.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Verification
-                    </a>
-                </li>
-                <li>
-                    <a href="./history.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
-                    </a>
-                </li>
-                <li>
-                    <a href="./users.php"
+                    <a href="./users/index.php"
                         class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Users
+                    </a>
+                </li>
+                <li>
+                    <a href="./history/index.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
                     </a>
                 </li>
             </ul>
@@ -61,10 +56,9 @@ $sukarela = $kategoriSuka->sum('jumlah');
                 <img src="../images/logo.png" class="w-36 md:w-24" />
             </a>
 
-            <a href="./verification.php"
-                class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Verification</a>
-            <a href="./history.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">History</a>
-            <a href="./users.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Users</a>
+            <a href="./users/index.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Users</a>
+            <a href="./history/index.php"
+                class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">History</a>
 
         </div>
 
@@ -110,7 +104,8 @@ $sukarela = $kategoriSuka->sum('jumlah');
     <!-- content -->
     <div class="flex flex-1 h-full my-4 flex-col lg:flex-row gap-8">
         <div class="flex flex-col w-full justify-center items-center ml-0 lg:ml-2">
-            <div class="flex w-[100%] h-[100%] rounded-[1rem] mb-0 lg:mb-[2.5rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg">
+            <div
+                class="flex w-[100%] h-[100%] rounded-[1rem] mb-0 lg:mb-[2.5rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg">
                 <div class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[3rem] text-2xl justify-between pr-2 lg:pr-0">
                     <div class="lg:mb-0 mb-10">
                         <p class="text-2xl font-light">Tabungan</p>
@@ -120,38 +115,41 @@ $sukarela = $kategoriSuka->sum('jumlah');
                         <p class="text-[1.75rem] md:text-[2rem] font-semibold">Rp.</p>
                         <p class="text-[3.5rem] md:text-[3.8rem] font-bold mt-4">
                             <?= number_format($pokok, 0, ',', '.'); ?>
-                            </p>
+                        </p>
                     </div>
                     <div>
                         <p class="text-xl md:text-2xl font-light italic">Setoran awal saat bergabung, <br>
-                        berperan sebagai modal awal koperasi.</p>
+                            berperan sebagai modal awal koperasi.</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="flex flex-col w-[100%] mb-[2.5rem] mr-[2rem]">
             <div class="flex-1 flex flex-col justify-between">
-                <div class="flex w-full h-[100%] rounded-[1rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg mb-[1rem]" >
-                        <div class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[1rem] text-2xl justify-between w-full py-2 mr-4 lg:mr-0">
-                            <div class="flex lg:mb-0 mb-8 lg:mt-0 mt-3">
-                                <p class="text-4xl md:text-5xl font-semibold">WAJIB</p>
-                            </div>
-                            <div class="lg:mb-0 mb-8">
-                                <p class="text-[1.75rem] md:text-[2rem] font-semibold">Rp.</p>
-                                <p class="text-[3.5rem] md:text-[3.8rem] font-bold mt-4">
-                                    <?= number_format($wajib, 0, ',', '.'); ?>
-                                </p>
-                            </div>
-                            <div>
-                                <p class="text-xl md:text-2xl font-light italic">Setoran bulanan yang wajib, mendukung<br>
-                                    keberlanjutan operasional koperasi.</p>
-                            </div>
+                <div
+                    class="flex w-full h-[100%] rounded-[1rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg mb-[1rem]">
+                    <div
+                        class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[1rem] text-2xl justify-between w-full py-2 mr-4 lg:mr-0">
+                        <div class="flex lg:mb-0 mb-8 lg:mt-0 mt-3">
+                            <p class="text-4xl md:text-5xl font-semibold">WAJIB</p>
                         </div>
+                        <div class="lg:mb-0 mb-8">
+                            <p class="text-[1.75rem] md:text-[2rem] font-semibold">Rp.</p>
+                            <p class="text-[3.5rem] md:text-[3.8rem] font-bold mt-4">
+                                <?= number_format($wajib, 0, ',', '.'); ?>
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xl md:text-2xl font-light italic">Setoran bulanan yang wajib, mendukung<br>
+                                keberlanjutan operasional koperasi.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flex-1 flex flex-col justify-between">
-                <div class="flex w-full h-full rounded-[1rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg" >
-                    <div class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[1rem] text-2xl justify-between w-full py-2 mr-4 lg:mr-0">
+                <div class="flex w-full h-full rounded-[1rem] bg-gradient-to-br from-[#E178C5] to-[#FFB38E] shadow-lg">
+                    <div
+                        class="flex flex-col text-[#FFFDCB] ml-[2.5rem] my-[1rem] text-2xl justify-between w-full py-2 mr-4 lg:mr-0">
                         <div class="flex lg:mb-0 mb-8 lg:mt-0 mt-3">
                             <p class="text-4xl md:text-5xl font-semibold">SUKARELA</p>
                         </div>
@@ -162,7 +160,8 @@ $sukarela = $kategoriSuka->sum('jumlah');
                             </p>
                         </div>
                         <div>
-                            <p class="text-xl md:text-2xl font-light italic">Setoran sukarela memberikan fleksibilitas kepada  <br>
+                            <p class="text-xl md:text-2xl font-light italic">Setoran sukarela memberikan fleksibilitas
+                                kepada <br>
                                 anggota karena dapat dilakukan kapan saja</p>
                         </div>
                     </div>
@@ -174,7 +173,7 @@ $sukarela = $kategoriSuka->sum('jumlah');
 
     <footer
         class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-        <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
+        <p class="text-center z-10 p-4">©2024 Unity. All rights reserved.</p>
     </footer>
 
 </body>

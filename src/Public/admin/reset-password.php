@@ -90,9 +90,9 @@ $_SESSION["success"] = null;
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
                 <?php if (!empty ($user["profile_picture"])): ?>
-                    <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
                 <?php else: ?>
-                    <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
                 <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
@@ -162,14 +162,14 @@ $_SESSION["success"] = null;
                         </label>
                     </div>
                     <?php if (isset ($error) && $error): ?>
-                        <p class="text-red-400">
-                            <?= $error ?>
-                        </p>
+                    <p class="text-red-400">
+                        <?= $error ?>
+                    </p>
                     <?php endif; ?>
                     <?php if (isset ($success) && $success): ?>
-                        <p class="text-green-400">
-                            <?= $success ?>
-                        </p>
+                    <p class="text-green-400">
+                        <?= $success ?>
+                    </p>
                     <?php endif; ?>
                     <button type="submit"
                         class="mt-5 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg">
@@ -183,7 +183,7 @@ $_SESSION["success"] = null;
 
     <footer
         class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-        <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
+        <p class="text-center z-10 p-4">©2024 Unity. All rights reserved.</p>
     </footer>
 
 </body>

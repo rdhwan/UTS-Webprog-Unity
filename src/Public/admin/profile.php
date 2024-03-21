@@ -215,7 +215,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </form>
 
                     <div class="flex flex-col sm:ms-0 md:ms-5">
-                        <p class="text-[#E178C5] mt-3 font-bold">Change Your Password</p>
+                        <p class="text-[#E178C5] mt-5 font-bold">Change Your Password</p>
                         <a href="reset-password.php">
                             <button
                                 class="my-2 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
@@ -235,7 +235,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <footer
         class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-        <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
+        <p class="text-center z-10 p-4">©2024 Unity. All rights reserved.</p>
     </footer>
 
 </body>

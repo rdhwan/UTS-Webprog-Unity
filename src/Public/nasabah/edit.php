@@ -88,13 +88,13 @@ $_SESSION["error"] = null;
                         <ul tabindex="0"
                             class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                             <li>
-                                <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
+                                <a href="/src/Public/nasabah/payment/wajib.php" class="text-[#E178C5] font-semibold">
                                     <i class="ph ph-wallet text-xl"></i>
                                     Tabungan Wajib
                                 </a>
                             </li>
                             <li>
-                                <a href="/src/Public/nasabah/sukarela.php" class="text-[#FFB38E] font-semibold">
+                                <a href="/src/Public/nasabah/payment/sukarela.php" class="text-[#FFB38E] font-semibold">
                                     <i class="ph ph-hand-coins text-xl"></i>
                                     Tabungan Sukarela
                                 </a>
@@ -120,13 +120,13 @@ $_SESSION["error"] = null;
                 </summary>
                 <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                     <li>
-                        <a href="/src/Public/nasabah/wajib.php" class="text-[#E178C5] font-semibold">
+                        <a href="/src/Public/nasabah/payment/wajib.php" class="text-[#E178C5] font-semibold">
                             <i class="ph ph-wallet text-xl"></i>
                             Tabungan Wajib
                         </a>
                     </li>
                     <li>
-                        <a href="/src/Public/nasabah/sukarela.php" class="text-[#FFB38E] font-semibold">
+                        <a href="/src/Public/nasabah/payment/sukarela.php" class="text-[#FFB38E] font-semibold">
                             <i class="ph ph-hand-coins text-xl"></i>
                             Tabungan Sukarela
                         </a>
@@ -138,17 +138,17 @@ $_SESSION["error"] = null;
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
+                <div class="hidden md:flex flex-col mr-1">
+                    <p class="font-semibold text-[#E178C5] text-right">
+                        <?= $user["nama"] ?>
+                    </p>
+                    <p class="font-light text-[#E178C5]/50 mt-1 text-right">Nasabah</p>
+                </div>
                 <?php if (!empty ($user["profile_picture"])): ?>
                 <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
                 <?php else: ?>
                 <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
                 <?php endif; ?>
-                <div class="hidden md:flex flex-col items-start">
-                    <p class="font-semibold text-[#E178C5]">
-                        <?= $user["nama"] ?>
-                    </p>
-                    <p class="font-light text-[#E178C5]/50">Nasabah</p>
-                </div>
             </summary>
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                 <div class="flex md:hidden flex-col p-4">
@@ -161,7 +161,7 @@ $_SESSION["error"] = null;
                 </div>
 
                 <li>
-                    <div>
+                    <div class="text-[#E178C5] text-base">
                         <p class="ph ph-pencil-simple-line text-xl"></p>
                         <a href="./profile.php">Edit profile</a>
                     </div>
@@ -174,9 +174,7 @@ $_SESSION["error"] = null;
                 </li>
             </ul>
         </details>
-
     </div>
-
 
 
     <!-- content -->
@@ -281,7 +279,7 @@ $_SESSION["error"] = null;
 
         <footer
             class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
-            <p class="text-center z-10 p-4">©2024 UnityBook. All rights reserved.</p>
+            <p class="text-center z-10 p-4">©2024 Unity. All rights reserved.</p>
         </footer>
 
 </body>

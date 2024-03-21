@@ -136,7 +136,7 @@ $_SESSION["error"] = null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/output.css">
     <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
-    <title>UnityBook</title>
+    <title>Unity Cooperative</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 
@@ -222,9 +222,9 @@ $_SESSION["error"] = null;
             <div class="flex justify-center w-[60%] h-[6rem] bg-red-400 my-[2rem]"></div>
 
             <?php if ($error): ?>
-            <p class="text-red-400">
-                <?= $error ?>
-            </p>
+                <p class="text-red-400">
+                    <?= $error ?>
+                </p>
             <?php endif; ?>
             <button
                 class="flex justify-center items-center h-[4rem] bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[3rem] text-[#FFFDCB] font-bold text-3xl px-[4rem]">Register</button>
