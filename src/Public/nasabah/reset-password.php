@@ -2,6 +2,9 @@
 require_once __DIR__ . "/../../bootstrap.php";
 require_once __DIR__ . "/../../Middleware/checkNasabah.php";
 
+$error = "";
+$success = "";
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newPassword = $_POST["password"];
     $confirmPassword = $_POST["confirm_password"];
@@ -176,15 +179,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <input type="password" required name="confirm_password" class="w-full bg-transparent" placeholder="Confirm new password" />
                         </label>
                     </div>
-                    <?php if ($error) : ?>
-                        <p class="text-red-400">
-                            <?= $error ?>
-                        </p>
+                    <?php if (isset($error) && $error) : ?>
+                        <p class="text-red-400"><?= $error ?></p>
                     <?php endif; ?>
-                    <?php if ($success) : ?>
-                        <p class="text-green-400">
-                            <?= $success ?>
-                        </p>
+                    <?php if (isset($success) && $success) : ?>
+                        <p class="text-green-400"><?= $success ?></p>
                     <?php endif; ?>
                     <button type="submit" class="mt-5 flex justify-center items-center w-[10rem] h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg">
                         Change Password
