@@ -24,6 +24,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $birthdate = $_POST['birthdate'];
     $payment = $_FILES['payment'];
 
+    // recaptcha
+    $captcha = $_POST['g-recaptcha-response'];
+    if (empty ($captcha)) {
+        $_SESSION["error"] = "You need to solve the captcha first";
+        header("Location: register.php");
+        exit;
+    }
+
+    $ip = $_SERVER['REMOTE_ADDR'];
+
+    $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode(env("RECAPTCHA_SECRET_KEY")) . '&response=' . urlencode($captcha);
+    $response = file_get_contents($url);
+    $responseKeys = json_decode($response, true);
+
+    if (!$responseKeys["success"]) {
+        $_SESSION["error"] = "Captcha verification failed";
+        header("Location: register.php");
+        exit;
+    }
+
 
     if (empty ($fullname) || empty ($username) || empty ($password) || empty ($email) || empty ($address) || empty ($gender) || empty ($birthdate) || empty ($payment)) {
         $_SESSION['error'] = 'There is an empty field';
@@ -138,6 +158,7 @@ $_SESSION["error"] = null;
     <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
     <title>Unity Cooperative</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 </head>
 
 <body class="flex flex-row justify-end min-h-screen min-w-full font-inter">
@@ -219,7 +240,7 @@ $_SESSION["error"] = null;
 
         </div>
         <div class="flex flex-col w-full items-center justify-center gap-4">
-            <div class="flex justify-center w-[60%] h-[6rem] bg-red-400 my-[2rem]"></div>
+            <div class="g-recaptcha" data-sitekey="6LdSWqApAAAAAHSYL46-e65IpvJv2cxiJcuBjjcT"></div>
 
             <?php if ($error): ?>
                 <p class="text-red-400">
