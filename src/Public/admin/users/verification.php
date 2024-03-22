@@ -155,14 +155,11 @@ $sukarela = $kategoriSuka->sum('jumlah');
                         <div class="flex mt-3 items-center">
                             <i class="ph ph-download-simple opacity-35 text-2xl"></i>
                             <button type="submit"
-                                class="shadow-lg mt-1 ms-2 flex px-2 py-1 justify-center items-center w-36 bg-black rounded-[0.5rem] text-[#00000035] text-sm"
+                                class="shadow-lg mt-1 ms-2 flex px-2 py-1 justify-center items-center w-36 bg-[#D9D9D9] rounded-[0.5rem] text-[#00000035] text-sm"
                                 aria-label="Save">
                                 Download File
                             </button>
                         </div>
-                        <!-- <input id="newprofilepict" required type="file" name="newprofilepict"
-                                class="file-input file-input-sm file-input-ghost text-[rgb(175,175,175)]"
-                                aria-label="Choose file"> -->
                     </div>
 
                     <div class="flex flex-col sm:ms-0 md:ms-5 w-full">
