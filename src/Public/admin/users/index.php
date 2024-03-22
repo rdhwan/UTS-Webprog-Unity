@@ -1,20 +1,8 @@
-<!-- data table user -->
-
-<!-- jun: slice history detail -->
-
 <?php
 
 require_once __DIR__ . "/../../../Middleware/checkAdmin.php";
 
-//Cek pokok
-$kategoriPokok = History::where('kategori', 'pokok')->where('status', "verified")->get();
-$pokok = $kategoriPokok->sum('jumlah');
-
-$kategoriWajib = History::where('kategori', 'wajib')->where('status', "verified")->get();
-$wajib = $kategoriWajib->sum('jumlah');
-
-$kategoriSuka = History::where('kategori', 'sukarela')->where('status', "verified")->get();
-$sukarela = $kategoriSuka->sum('jumlah');
+$users = User::where("role", "=", "nasabah")->get();
 
 ?>
 
@@ -26,9 +14,16 @@ $sukarela = $kategoriSuka->sum('jumlah');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/output.css">
+    <!-- mitigasi datatable -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="shortcut icon" href="../../images/logo.png" type="image/x-icon">
     <title>Unity</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.tailwindcss.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.tailwindcss.css">
+
 </head>
 
 <body class="flex flex-col min-h-screen min-w-full font-inter p-4 md:p-8">
@@ -70,9 +65,9 @@ $sukarela = $kategoriSuka->sum('jumlah');
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
                 <?php if (!empty ($user["profile_picture"])): ?>
-                    <img src="../../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <img src="../../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
                 <?php else: ?>
-                    <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
                 <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
@@ -110,16 +105,149 @@ $sukarela = $kategoriSuka->sum('jumlah');
 
 
 
+    <!-- override tailwind style -->
+    <style>
+    .dt-container {
+        flex: 1;
+    }
+
+    #dt-length-0 {
+        background-color: white;
+    }
+
+    #dt-search-0 {
+        background-color: white;
+    }
+
+    .pagination>a {
+        background-color: white;
+        color: black;
+    }
+
+    thead>tr {
+        background-color: #F6F6F6;
+        color: black;
+    }
+
+    .dt-column-title {
+        color: black;
+        font-weight: 600;
+    }
+
+    #row {
+        background-color: white;
+    }
+
+    #title {
+        background-color: #F6F7F8;
+    }
+
+    #row:nth-child(even) {
+        background-color: #F6F6F6;
+    }
+    </style>
+
+
+
     <!-- content -->
-    <div class="flex flex-1 h-full my-4 flex-col lg:flex-row gap-8">
-        info slicing
+    <div class="flex flex-1 h-full my-4 justify-center">
+        <div
+            class="flex flex-1 flex-col md:flex-row mb-12 md:mb-4 rounded-3xl bg-gradient-to-b from-[#E178C5] to-[#FFB38E] justify-center items-center p-8 pt-2 md:pb-8 md:py-12 md:pr-12 md:pl-2">
+            <div
+                class="flex flex-row md:flex-row-reverse md:self-end m-4 md:m-8 md:[writing-mode:vertical-lr] md:rotate-180">
+                <i
+                    class="ph ph-users-three md:rotate-180 text-5xl md:text-7xl text-[#FFFDCB] my-0 mx-2 md:mx-0 md:my-2"></i>
+                <div class="flex text-5xl md:text-7xl font-bold text-[#FFFDCB]">
+                    Users
+                </div>
+            </div>
+            <div class="flex w-full h-full bg-white rounded-2xl shadow-lg p-4 overflow-scroll">
+                <table id="users" class="display w-full h-full">
+                    <thead>
+                        <tr>
+                            <th id="title">Username</th>
+                            <th id="title">Full Name</th>
+                            <th id="title">Email</th>
+                            <th id="title">Gender</th>
+                            <th id="title">Birth Date</th>
+                            <th id="title">Status</th>
+                            <th id="title">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php foreach ($users as $u): ?>
+                        <tr id="row">
+                            <td>
+                                <?= $u->username ?>
+                            </td>
+                            <td>
+                                <?= $u->nama ?>
+                            </td>
+                            <td>
+                                <?= $u->email ?>
+                            </td>
+                            <td>
+                                <?= $u->jenis_kelamin === "L" ? "Laki-Laki" : "Perempuan" ?>
+                            </td>
+                            <td>
+                                <?= $u->tanggal_lahir ?>
+                            </td>
+                            <td>
+                                <input type="checkbox" class="toggle toggle-success"
+                                    <?php if ($u->is_active) echo "checked" ?> disabled />
+                            </td>
+
+                            <td class="flex flex-row gap-2">
+                                <a href="verification.php?id=<?= $u->id ?>"
+                                    class="btn btn-sm btn-secondary font-normal">
+                                    Verification
+                                </a>
+
+                                <button class="btn btn-sm btn-error" onclick="delete_modal_<?= $u->id ?>.showModal()">
+                                    <i class="ph ph-user-circle-minus text-xl text-black/85"></i>
+                                </button>
+
+                                <dialog id="delete_modal_<?= $u->id ?>" class="modal">
+                                    <div class="modal-box">
+                                        <h3 class="font-bold text-lg">Delete User</h3>
+                                        <p class="py-4">Are you sure to delete user
+                                            <span class="font-bold">
+                                                <?= $u->nama ?>
+                                            </span>
+                                            ?
+                                        </p>
+                                        <div class="modal-action">
+                                            <form method="dialog">
+                                                <!-- if there is a button in form, it will close the modal -->
+                                                <a href="delete.php?id=<?= $u->id ?>" class="btn btn-error">Delete</a>
+                                                <button class="btn">Cancel</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </dialog>
+
+
+                            </td>
+
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 
-    <footer
-        class="footer footer-center items-center justify-center text-white font-semibold bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
+    <footer class=" footer footer-center items-center justify-center text-white font-semibold
+                                        bg-[url('../images/background/bottom.svg')] fixed inset-x-0 bottom-0">
         <p class="text-center z-10 p-4">©2024 Unity. All rights reserved.</p>
     </footer>
+
+
+    <script>
+    new DataTable("#users");
+    </script>
 
 </body>
 

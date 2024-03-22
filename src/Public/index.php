@@ -71,6 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    if (!$user->is_active) {
+        $_SESSION["error"] = "Account is not yet verified by Admin";
+        header("Location: index.php");
+        exit;
+    }
+
     $token = generateToken();
     $user->remember_token = $token;
     $user->save();
