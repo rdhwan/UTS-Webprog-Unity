@@ -24,24 +24,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'];
 
     // recaptcha
-    $captcha = $_POST['g-recaptcha-response'];
-    if (empty ($captcha)) {
-        $_SESSION["error"] = "You need to solve the captcha first";
-        header("Location: index.php");
-        exit;
-    }
+    // $captcha = $_POST['g-recaptcha-response'];
+    // if (empty ($captcha)) {
+    //     $_SESSION["error"] = "You need to solve the captcha first";
+    //     header("Location: index.php");
+    //     exit;
+    // }
 
-    $ip = $_SERVER['REMOTE_ADDR'];
+    // $ip = $_SERVER['REMOTE_ADDR'];
 
-    $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode(env("RECAPTCHA_SECRET_KEY")) . '&response=' . urlencode($captcha);
-    $response = file_get_contents($url);
-    $responseKeys = json_decode($response, true);
+    // $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode(env("RECAPTCHA_SECRET_KEY")) . '&response=' . urlencode($captcha);
+    // $response = file_get_contents($url);
+    // $responseKeys = json_decode($response, true);
 
-    if (!$responseKeys["success"]) {
-        $_SESSION["error"] = "Captcha verification failed";
-        header("Location: index.php");
-        exit;
-    }
+    // if (!$responseKeys["success"]) {
+    //     $_SESSION["error"] = "Captcha verification failed";
+    //     header("Location: index.php");
+    //     exit;
+    // }
 
     // validasi
     // check if username and password is empty
@@ -128,9 +128,9 @@ $_SESSION["error"] = null;
                 <div class="g-recaptcha" data-sitekey="6LdSWqApAAAAAHSYL46-e65IpvJv2cxiJcuBjjcT"></div>
 
                 <?php if ($error): ?>
-                    <p class="text-red-400">
-                        <?= $error ?>
-                    </p>
+                <p class="text-red-400">
+                    <?= $error ?>
+                </p>
                 <?php endif; ?>
 
                 <button type="submit"
