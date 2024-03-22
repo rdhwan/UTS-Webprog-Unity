@@ -188,12 +188,12 @@ $history = $user->histories()->get();
             <div
                 class="flex flex-row md:flex-row-reverse md:self-end m-4 md:m-8 md:[writing-mode:vertical-lr] md:rotate-180">
                 <i
-                    class="ph ph-clock-counter-clockwise text-5xl md:text-7xl text-[#FFFDCB] my-0 mx-2 md:mx-0 md:my-2"></i>
+                    class="ph ph-clock-counter-clockwise md:rotate-180 text-5xl md:text-7xl text-[#FFFDCB] my-0 mx-2 md:mx-0 md:my-2"></i>
                 <div class="flex text-5xl md:text-7xl font-bold text-[#FFFDCB]">
                     History
                 </div>
             </div>
-            <div class="flex w-full h-full bg-white rounded-2xl shadow-lg p-4">
+            <div class="flex w-full h-full bg-white rounded-2xl shadow-lg p-4 overflow-scroll">
                 <table id="wajib" class="display w-full h-full">
                     <thead>
                         <tr>

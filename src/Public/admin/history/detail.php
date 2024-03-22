@@ -4,15 +4,29 @@
 
 require_once __DIR__ . "/../../../Middleware/checkAdmin.php";
 
-//Cek pokok
-$kategoriPokok = History::where('kategori', 'pokok')->where('status', "verified")->get();
-$pokok = $kategoriPokok->sum('jumlah');
+$id = $_GET["id"];
 
-$kategoriWajib = History::where('kategori', 'wajib')->where('status', "verified")->get();
-$wajib = $kategoriWajib->sum('jumlah');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $status = $_POST["status"];
+    $history = History::find($id);
+    if ($history === null) {
+        header("Location: index.php");
+        exit;
+    }
 
-$kategoriSuka = History::where('kategori', 'sukarela')->where('status', "verified")->get();
-$sukarela = $kategoriSuka->sum('jumlah');
+    $history->update(["status" => $status]);
+    header("Location: detail.php?id=$id");
+    exit;
+}
+
+
+
+$history = History::with("user:id,nama,profile_picture")->find($id);
+
+if ($history === null) {
+    header("Location: index.php");
+    exit;
+}
 
 ?>
 
@@ -109,7 +123,7 @@ $sukarela = $kategoriSuka->sum('jumlah');
 
 
     <!-- content -->
-     <div class="flex flex-1 h-full my-4 justify-center items-center">
+    <div class="flex flex-1 h-full my-4 justify-center items-center">
         <div
             class="mb-[3rem] md:mb-0 flex flex-col relative bg-gradient-to-r from-[#E178C5] to-[#FFB38E] p-5 md:w-[40rem] w-[18rem] h-auto rounded-2xl shadow-lg">
             <div class="bg-[#f6f6f6] rounded-xl md:p-[2rem] p-[1rem]">
@@ -124,17 +138,17 @@ $sukarela = $kategoriSuka->sum('jumlah');
                 </div>
                 <div class="md:flex flex-column md:justify-between">
                     <div class="flex">
-                        <?php if (!empty ($user["profile_picture"])): ?>
-                            <img src="../../images/profile/<?= $user["profile_picture"] ?>"
-                                class="w-20 h-20 object-cover mr-5 rounded-full" />
+                        <?php if (!empty ($history["user"]["profile_picture"])): ?>
+                        <img src="../../images/profile/<?= $history["user"]["profile_picture"] ?>"
+                            class="w-20 h-20 object-cover mr-5 rounded-full" />
                         <?php else: ?>
-                            <img src="../../images/profile/dummyProfile.svg"
-                                class="w-20 h-20 object-cover mr-5 rounded-full" />
+                        <img src="../../images/profile/dummyProfile.svg"
+                            class="w-20 h-20 object-cover mr-5 rounded-full" />
                         <?php endif; ?>
                         <div class="flex items-center">
                             <div class="md:flex flex-col items-start text-lg">
                                 <p class="font-semibold text-[#E178C5]">
-                                    <?= $user["nama"] ?>
+                                    <?= $history["user"]["nama"] ?>
                                 </p>
                                 <p class="font-light text-[#E178C5]/50">Nasabah</p>
                             </div>
@@ -144,14 +158,21 @@ $sukarela = $kategoriSuka->sum('jumlah');
                     <div class="flex flex-col items-end">
                         <p class="text-[#FF8E8F] text-xs">Date of Transfer</p>
                         <p class="text-[#E178C5] font-bold">
-                            2024-01-01
+                            <?= substr($history["tanggal"], 0, 10) ?>
                         </p>
                         <p class="text-[#FF8E8F] text-xs">Status</p>
-                        <select class="select select-secondary select-sm w-full max-w-xs mt-1" style="color: #E178C5 !important; outline: 0;">
-                            <option selected class="text-[#E178C5]">Reviewed</option>
-                            <option class="text-green-400">Accepted</option>
-                            <option class=" text-red-400">Rejected</option>
-                        </select>
+                        <form name="status" method="post">
+                            <select class="select select-secondary select-sm w-full max-w-xs mt-1" name="status"
+                                style="color: #E178C5 !important; outline: 0;"
+                                onchange="document.forms['status'].submit()">
+                                <option class="text-[#E178C5]" value="reviewed"
+                                    <?php if ($history["status"] === "reviewed") echo "selected" ?>>Reviewed</option>
+                                <option class="text-green-400" value="verified"
+                                    <?php if ($history["status"] === "verified") echo "selected" ?>>Verified</option>
+                                <option class=" text-red-400" value="rejected"
+                                    <?php if ($history["status"] === "rejected") echo "selected" ?>>Rejected</option>
+                            </select>
+                        </form>
                     </div>
 
                 </div>
@@ -162,11 +183,11 @@ $sukarela = $kategoriSuka->sum('jumlah');
                         <p class="text-[#FF8E8F]">Download Image to View</p>
                         <div class="flex mt-3 items-center">
                             <i class="ph ph-download-simple opacity-35 text-2xl"></i>
-                            <button type="submit"
+                            <a href="../../images/bukti/<?= $history["bukti"] ?>" target="_blank"
                                 class="shadow-lg mt-1 ms-2 flex px-2 py-1 justify-center items-center w-36 bg-[#D9D9D9] rounded-[0.5rem] text-[#00000035] text-sm"
                                 aria-label="Save">
                                 Download File
-                            </button>
+                            </a>
                         </div>
                     </div>
 
@@ -174,11 +195,11 @@ $sukarela = $kategoriSuka->sum('jumlah');
                         <p class="text-[#E178C5] mt-5 font-bold">Payment Detail</p>
                         <div
                             class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#FF8E8F] rounded-t-lg text-[#FFFDCB] font-bold text-sm shadow-lg ">
-                            Tabungan Pokok
+                            Tabungan <?= ucfirst($history["kategori"]) ?>
                         </div>
                         <div
                             class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#F6F6F6] rounded-b-lg text-[#FF8E8F] font-bold text-sm shadow-lg ">
-                            Rp. 1.000.000,-
+                            Rp. <?= number_format($history["jumlah"], 0, ",", ".") ?>,-
                         </div>
                     </div>
                 </div>

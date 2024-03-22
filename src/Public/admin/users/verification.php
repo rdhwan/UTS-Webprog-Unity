@@ -4,15 +4,30 @@
 
 require_once __DIR__ . "/../../../Middleware/checkAdmin.php";
 
-//Cek pokok
-$kategoriPokok = History::where('kategori', 'pokok')->where('status', "verified")->get();
-$pokok = $kategoriPokok->sum('jumlah');
+$id = $_GET["id"];
 
-$kategoriWajib = History::where('kategori', 'wajib')->where('status', "verified")->get();
-$wajib = $kategoriWajib->sum('jumlah');
 
-$kategoriSuka = History::where('kategori', 'sukarela')->where('status', "verified")->get();
-$sukarela = $kategoriSuka->sum('jumlah');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nasabah = User::find($id);
+    if ($nasabah === null) {
+        header("Location: index.php");
+        exit;
+    }
+
+    $nasabah->update(["is_active" => !$nasabah["is_active"]]);
+    $nasabah->histories()->where("kategori", "=", "pokok")->update(["status" => $nasabah["is_active"] ? "verified" : "reviewed"]);
+
+    header("Location: verification.php?id=$id");
+}
+
+
+$nasabah = User::find($id);
+if ($nasabah === null) {
+    header("Location: index.php");
+    exit;
+}
+
+$pokok = $nasabah->histories()->where("kategori", "=", "pokok")->first();
 
 ?>
 
@@ -124,8 +139,8 @@ $sukarela = $kategoriSuka->sum('jumlah');
                 </div>
                 <div class="md:flex flex-column md:justify-between">
                     <div class="flex">
-                        <?php if (!empty ($user["profile_picture"])): ?>
-                        <img src="../../images/profile/<?= $user["profile_picture"] ?>"
+                        <?php if (!empty ($nasabah["profile_picture"])): ?>
+                        <img src="../../images/profile/<?= $nasabah["profile_picture"] ?>"
                             class="w-20 h-20 object-cover mr-5 rounded-full" />
                         <?php else: ?>
                         <img src="../../images/profile/dummyProfile.svg"
@@ -134,7 +149,7 @@ $sukarela = $kategoriSuka->sum('jumlah');
                         <div class="flex items-center">
                             <div class="md:flex flex-col items-start text-lg">
                                 <p class="font-semibold text-[#E178C5]">
-                                    <?= $user["nama"] ?>
+                                    <?= $nasabah["nama"] ?>
                                 </p>
                                 <p class="font-light text-[#E178C5]/50">Nasabah</p>
                             </div>
@@ -143,7 +158,12 @@ $sukarela = $kategoriSuka->sum('jumlah');
                     </div>
                     <div class="flex flex-col justify-content-end items-center">
                         <p class="text-[#FF8E8F]">Status</p>
-                        <input type="checkbox" class="toggle toggle-success" checked />
+
+                        <form name="activeToggle" method="post">
+                            <input type="checkbox" class="toggle toggle-success"
+                                <?php if ($nasabah["is_active"]) echo "checked" ?>
+                                onchange="document.activeToggle.submit()" />
+                        </form>
                     </div>
 
                 </div>
@@ -154,11 +174,11 @@ $sukarela = $kategoriSuka->sum('jumlah');
                         <p class="text-[#FF8E8F]">Download Image to View</p>
                         <div class="flex mt-3 items-center">
                             <i class="ph ph-download-simple opacity-35 text-2xl"></i>
-                            <button type="submit"
+                            <a href="../../images/bukti/<?= $pokok["bukti"] ?>" target="_blank"
                                 class="shadow-lg mt-1 ms-2 flex px-2 py-1 justify-center items-center w-36 bg-[#D9D9D9] rounded-[0.5rem] text-[#00000035] text-sm"
                                 aria-label="Save">
                                 Download File
-                            </button>
+                            </a>
                         </div>
                     </div>
 
