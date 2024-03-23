@@ -56,18 +56,13 @@ $_SESSION["success"] = null;
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li>
-                    <a href="./verification.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Verification
-                    </a>
-                </li>
-                <li>
-                    <a href="./history.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
-                    </a>
-                </li>
-                <li>
-                    <a href="./users.php"
+                    <a href="./users/index.php"
                         class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Users
+                    </a>
+                </li>
+                <li>
+                    <a href="./history/index.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
                     </a>
                 </li>
             </ul>
@@ -76,14 +71,13 @@ $_SESSION["success"] = null;
 
 
         <div class="hidden md:flex flex-row items-center gap-8">
-            <a href="/src/Public/nasabah/index.php">
+            <a href="/src/Public/admin/index.php">
                 <img src="../images/logo.png" class="w-36 md:w-24" />
             </a>
 
-            <a href="./verification.php"
-                class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Verification</a>
-            <a href="./history.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">History</a>
-            <a href="./users.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Users</a>
+            <a href="./users/index.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Users</a>
+            <a href="./history/index.php"
+                class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">History</a>
 
         </div>
 
@@ -112,15 +106,15 @@ $_SESSION["success"] = null;
                 </div>
 
                 <li>
-                    <div>
+                    <div class="text-[#E178C5] text-base">
                         <p class="ph ph-pencil-simple-line text-xl"></p>
                         <a href="./profile.php">Edit profile</a>
                     </div>
                 </li>
                 <li>
-                    <div class="text-[#FF8E8F]">
+                    <div class="text-[#FF8E8F] text-base">
                         <p class="ph ph-sign-out text-xl"></p>
-                        <a href="../logout.php">Logout</a>
+                        <a href="./logout.php">Logout</a>
                     </div>
                 </li>
             </ul>
