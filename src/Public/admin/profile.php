@@ -71,18 +71,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li>
-                    <a href="./verification.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Verification
-                    </a>
-                </li>
-                <li>
-                    <a href="./history.php"
-                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
-                    </a>
-                </li>
-                <li>
-                    <a href="./users.php"
+                    <a href="./users/index.php"
                         class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">Users
+                    </a>
+                </li>
+                <li>
+                    <a href="./history/index.php"
+                        class="btn btn-ghost flex items-center justify-start font-semibold text-lg text-[#E178C5]">History
                     </a>
                 </li>
             </ul>
@@ -91,23 +86,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         <div class="hidden md:flex flex-row items-center gap-8">
-            <a href="/src/Public/nasabah/index.php">
+            <a href="/src/Public/admin/index.php">
                 <img src="../images/logo.png" class="w-36 md:w-24" />
             </a>
 
-            <a href="./verification.php"
-                class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Verification</a>
-            <a href="./history.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">History</a>
-            <a href="./users.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Users</a>
+            <a href="./users/index.php" class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">Users</a>
+            <a href="./history/index.php"
+                class="btn btn-ghost text-center font-semibold text-lg text-[#E178C5]">History</a>
 
         </div>
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
                 <?php if (!empty ($user["profile_picture"])): ?>
-                <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                    <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
                 <?php else: ?>
-                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                    <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
                 <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
@@ -127,15 +121,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
 
                 <li>
-                    <div>
+                    <div class="text-[#E178C5] text-base">
                         <p class="ph ph-pencil-simple-line text-xl"></p>
                         <a href="./profile.php">Edit profile</a>
                     </div>
                 </li>
                 <li>
-                    <div class="text-[#FF8E8F]">
+                    <div class="text-[#FF8E8F] text-base">
                         <p class="ph ph-sign-out text-xl"></p>
-                        <a href="../logout.php">Logout</a>
+                        <a href="./logout.php">Logout</a>
                     </div>
                 </li>
             </ul>
@@ -160,11 +154,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="md:flex flex-column md:justify-between">
                     <div class="flex">
                         <?php if (!empty ($user["profile_picture"])): ?>
-                        <img src="../images/profile/<?= $user["profile_picture"] ?>"
-                            class="w-20 h-20 object-cover mr-5 rounded-full" />
+                            <img src="../images/profile/<?= $user["profile_picture"] ?>"
+                                class="w-20 h-20 object-cover mr-5 rounded-full" />
                         <?php else: ?>
-                        <img src="../images/profile/dummyProfile.svg"
-                            class="w-20 h-20 object-cover mr-5 rounded-full" />
+                            <img src="../images/profile/dummyProfile.svg"
+                                class="w-20 h-20 object-cover mr-5 rounded-full" />
                         <?php endif; ?>
                         <div class="flex items-center">
                             <div class="md:flex flex-col items-start text-lg">
@@ -200,9 +194,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                         aria-label="Choose file">
                                 </label>
                                 <?php if (!empty ($error)): ?>
-                                <p class="text-red-500">
-                                    <?php echo $error; ?>
-                                </p>
+                                    <p class="text-red-500">
+                                        <?php echo $error; ?>
+                                    </p>
                                 <?php endif; ?>
                                 <button type="submit"
                                     class="shadow-lg mt-1 flex justify-center items-center h-[2rem] w-[5rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm"

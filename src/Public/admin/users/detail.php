@@ -5,6 +5,7 @@
 require_once __DIR__ . "/../../../Middleware/checkAdmin.php";
 
 $id = $_GET["id"];
+$tabungan = $_GET["tabungan"] ?? "pokok";
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nasabah->update(["is_active" => !$nasabah["is_active"]]);
     $nasabah->histories()->where("kategori", "=", "pokok")->update(["status" => $nasabah["is_active"] ? "verified" : "reviewed"]);
 
-    header("Location: verification.php?id=$id");
+    header("Location: detail.php?id=$id");
 }
 
 
@@ -27,7 +28,7 @@ if ($nasabah === null) {
     exit;
 }
 
-$pokok = $nasabah->histories()->where("kategori", "=", "pokok")->first();
+$tabungan = $nasabah->histories()->where("kategori", "=", $tabungan)->first();
 
 ?>
 
@@ -130,7 +131,7 @@ $pokok = $nasabah->histories()->where("kategori", "=", "pokok")->first();
             <div class="bg-[#f6f6f6] rounded-xl md:p-[2rem] p-[1rem]">
                 <div class="flex justify-between">
                     <span class="text-3xl font-bold text-[#FF8E8F]">
-                        User Verification
+                        User Detail
                     </span>
                     <a href="index.php" class="flex-column justify-center mb-5 items-center ">
                         <i class="mb-1 flex justify-center ph-bold ph-x text-center  text-[#1F1F1F]/35"></i>
@@ -174,7 +175,7 @@ $pokok = $nasabah->histories()->where("kategori", "=", "pokok")->first();
                         <p class="text-[#FF8E8F]">Download Image to View</p>
                         <div class="flex mt-3 items-center">
                             <i class="ph ph-download-simple opacity-35 text-2xl"></i>
-                            <a href="../../images/bukti/<?= $pokok["bukti"] ?>" target="_blank"
+                            <a href="../../images/bukti/<?= $tabungan["bukti"] ?>" target="_blank"
                                 class="shadow-lg mt-1 ms-2 flex px-2 py-1 justify-center items-center w-36 bg-[#D9D9D9] rounded-[0.5rem] text-[#00000035] text-sm"
                                 aria-label="Save">
                                 Download File
@@ -183,14 +184,34 @@ $pokok = $nasabah->histories()->where("kategori", "=", "pokok")->first();
                     </div>
 
                     <div class="flex flex-col sm:ms-0 md:ms-5 w-full">
-                        <p class="text-[#E178C5] mt-5 font-bold">Payment Detail</p>
-                        <div
-                            class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#FF8E8F] rounded-t-lg text-[#FFFDCB] font-bold text-sm shadow-lg ">
-                            Tabungan Pokok
+                        <p class="text-[#E178C5] mt-5 font-bold">Detail Tabungan</p>
+
+                        <div class="dropdown">
+                            <div tabindex="0" role="button"
+                                class="btn btn-sm w-full max-w-xs bg-[#FF8E8F] text-[#FFFDCB] rounded-t-md font-bold">
+                                Tabungan <?= ucfirst($tabungan["kategori"]) ?> <i class="ph-fill ph-caret-down"></i>
+                            </div>
+                            <ul tabindex="0"
+                                class="dropdown-content z-[1] menu p-2 shadow rounded-box w-full bg-[#FF8E8F]">
+                                <li>
+                                    <a href="detail.php?id=<?= $id ?>&tabungan=pokok" class="text-[#FFFDCB]">Tabungan
+                                        Pokok
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="detail.php?id=<?= $id ?>&tabungan=wajib" class="text-[#FFFDCB]">Tabungan
+                                        Wajib
+                                    </a>
+                                </li>
+                                <li><a href="detail.php?id=<?= $id ?>&tabungan=sukarela" class="text-[#FFFDCB]">Tabungan
+                                        Sukarela</a>
+                                </li>
+                            </ul>
                         </div>
+
                         <div
                             class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#F6F6F6] rounded-b-lg text-[#FF8E8F] font-bold text-sm shadow-lg ">
-                            Rp. 1.000.000,-
+                            Rp. <?= number_format($tabungan["jumlah"], 0, ",", ".") ?>,-
                         </div>
                     </div>
                 </div>

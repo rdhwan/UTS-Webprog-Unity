@@ -2,7 +2,7 @@
 
 require_once __DIR__ . "/../../../Middleware/checkAdmin.php";
 
-$histories = History::with("user:id,nama")->get();
+$histories = History::with("user:id,username,nama")->get();
 
 ?>
 
@@ -166,6 +166,7 @@ $histories = History::with("user:id,nama")->get();
                     <thead>
                         <tr>
                             <th id="title">Category</th>
+                            <th id="title">Username</th>
                             <th id="title">Customer Name</th>
                             <th id="title">Amount</th>
                             <th id="title">Payment Date</th>
@@ -181,6 +182,9 @@ $histories = History::with("user:id,nama")->get();
                                     <?=
                                         ucfirst($h->kategori)
                                         ?>
+                                </td>
+                                <td>
+                                    <?= $h->user->username ?>
                                 </td>
                                 <td>
                                     <?= $h->user->nama ?>

@@ -247,12 +247,10 @@ $_SESSION["error"] = null;
 
                         <div class="flex flex-col">
                             <p class="text-[#E178C5] font-bold">Change Your Password</p>
-                            <a href="reset-password.php">
-                                <button
-                                    class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
-                                    Reset
-                                    Password</button>
-                            </a>
+                            <a href="reset-password.php"
+                                class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#FF8E8F] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm shadow-lg ">
+                                Reset
+                                Password</a>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,22 @@
 
 require_once __DIR__ . "/../../../Middleware/checkAdmin.php";
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST["id"];
+    
+    $nasabah = User::find($id);
+    if ($nasabah === null) {
+        header("Location: index.php");
+        exit;
+    }
+
+    $nasabah->update(["is_active" => !$nasabah["is_active"]]);
+    $nasabah->histories()->where("kategori", "=", "pokok")->update(["status" => $nasabah["is_active"] ? "verified" : "reviewed"]);
+
+    header("Location: index.php");
+}
+
+
 $users = User::where("role", "=", "nasabah")->get();
 
 ?>
@@ -194,14 +210,17 @@ $users = User::where("role", "=", "nasabah")->get();
                                 <?= $u->tanggal_lahir ?>
                             </td>
                             <td>
-                                <input type="checkbox" class="toggle toggle-success"
-                                    <?php if ($u->is_active) echo "checked" ?> disabled />
+                                <form name="activeToggle_<?= $u->id ?>" method="post">
+                                    <input type="hidden" name="id" value="<?= $u->id ?>">
+                                    <input type="checkbox" class="toggle toggle-success"
+                                        onchange="document.activeToggle_<?= $u->id ?>.submit()"
+                                        <?php if ($u->is_active) echo "checked" ?> />
+                                </form>
                             </td>
 
                             <td class="flex flex-row gap-2">
-                                <a href="verification.php?id=<?= $u->id ?>"
-                                    class="btn btn-sm btn-secondary font-normal">
-                                    Verification
+                                <a href="detail.php?id=<?= $u->id ?>" class="btn btn-sm btn-secondary font-normal">
+                                    Detail
                                 </a>
 
                                 <button class="btn btn-sm btn-error" onclick="delete_modal_<?= $u->id ?>.showModal()">
