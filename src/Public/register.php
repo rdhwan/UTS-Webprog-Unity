@@ -5,9 +5,9 @@ if (isset ($_COOKIE["token"]) && $user = User::where("remember_token", "=", $_CO
     $_SESSION["error"] = "You are already signed in.";
 
     if ($user->role === "admin") {
-        header("Location: UTSlec/UTS-Webprog-Unity/src/Public/admin/index.php");
+        header("Location: src/Public/admin/index.php");
     } else {
-        header("Location: UTSlec/UTS-Webprog-Unity/src/Public/nasabah/index.php");
+        header("Location: src/Public/nasabah/index.php");
     }
     exit;
 }
@@ -51,18 +51,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
     }
 
-    // if (!preg_match("/(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/", $fullname)) {
-    //     $_SESSION["error"] = "Invalid full name.";
-    //     header("Location: register.php");
-    //     exit;
-    // }
+    if (!preg_match("/(^[A-Za-z]{3,16})([ ]{0,1})([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})?([ ]{0,1})?([A-Za-z]{3,16})/", $fullname)) {
+        $_SESSION["error"] = "Invalid full name.";
+        header("Location: register.php");
+        exit;
+    }
 
-
-    if (strlen($username) < 3 || strlen($username) > 16) {
+    // username regex
+    // ^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$
+    if (!preg_match("/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/", $username)) {
         $_SESSION["error"] = "Invalid username. ";
         header("Location: register.php");
         exit;
     }
+
 
     if (strlen($password) < 8 || !preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/", $password)) {
         $_SESSION["error"] = "Password must contain at least 8 characters, must including uppercase and numbers.";

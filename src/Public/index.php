@@ -51,6 +51,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
+    // username regex
+    // ^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$
+    if (!preg_match("/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/", $username)) {
+        $_SESSION["error"] = "Invalid username. ";
+        header("Location: register.php");
+        exit;
+    }
+
     // check password length
     if (strlen($password) < 8) {
         $_SESSION["error"] = "Password must be at least 8 characters";
