@@ -51,7 +51,7 @@ $histories = History::with("user:id,username,nama")->get();
 
 
         <div class="hidden md:flex flex-row items-center gap-8">
-            <a href="/src/Public/admin/index.php">
+            <a href="/admin/index.php">
                 <img src="../../images/logo.png" class="w-36 md:w-24" />
             </a>
 
@@ -64,17 +64,17 @@ $histories = History::with("user:id,username,nama")->get();
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <?php if (!empty ($user["profile_picture"])): ?>
-                    <img src="../../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
-                <?php else: ?>
-                    <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
-                <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
                     </p>
                     <p class="font-light text-[#E178C5]/50">Admin</p>
                 </div>
+                <?php if (!empty ($user["profile_picture"])): ?>
+                <img src="../../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <?php else: ?>
+                <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <?php endif; ?>
             </summary>
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                 <div class="flex md:hidden flex-col p-4">
@@ -107,44 +107,44 @@ $histories = History::with("user:id,username,nama")->get();
 
     <!-- override tailwind style -->
     <style>
-        .dt-container {
-            flex: 1;
-        }
+    .dt-container {
+        flex: 1;
+    }
 
-        #dt-length-0 {
-            background-color: white;
-        }
+    #dt-length-0 {
+        background-color: white;
+    }
 
-        #dt-search-0 {
-            background-color: white;
-        }
+    #dt-search-0 {
+        background-color: white;
+    }
 
-        .pagination>a {
-            background-color: white;
-            color: black;
-        }
+    .pagination>a {
+        background-color: white;
+        color: black;
+    }
 
-        thead>tr {
-            background-color: #F6F6F6;
-            color: black;
-        }
+    thead>tr {
+        background-color: #F6F6F6;
+        color: black;
+    }
 
-        .dt-column-title {
-            color: black;
-            font-weight: 600;
-        }
+    .dt-column-title {
+        color: black;
+        font-weight: 600;
+    }
 
-        #row {
-            background-color: white;
-        }
+    #row {
+        background-color: white;
+    }
 
-        #title {
-            background-color: #F6F7F8;
-        }
+    #title {
+        background-color: #F6F7F8;
+    }
 
-        #row:nth-child(even) {
-            background-color: #F6F6F6;
-        }
+    #row:nth-child(even) {
+        background-color: #F6F6F6;
+    }
     </style>
 
 
@@ -177,43 +177,43 @@ $histories = History::with("user:id,username,nama")->get();
 
                     <tbody>
                         <?php foreach ($histories as $h): ?>
-                            <tr id="row">
-                                <td>
-                                    <?=
+                        <tr id="row">
+                            <td>
+                                <?=
                                         ucfirst($h->kategori)
                                         ?>
-                                </td>
-                                <td>
-                                    <?= $h->user->username ?>
-                                </td>
-                                <td>
-                                    <?= $h->user->nama ?>
-                                </td>
-                                <td>
-                                    Rp.
-                                    <?= number_format($h->jumlah, 0, ",", ".") ?>,-
-                                </td>
-                                <td>
-                                    <?=
+                            </td>
+                            <td>
+                                <?= $h->user->username ?>
+                            </td>
+                            <td>
+                                <?= $h->user->nama ?>
+                            </td>
+                            <td>
+                                Rp.
+                                <?= number_format($h->jumlah, 0, ",", ".") ?>,-
+                            </td>
+                            <td>
+                                <?=
                                         substr($h->tanggal, 0, 10)
                                         ?>
-                                </td>
-                                <td>
-                                    <!-- <?= ucfirst($h->status) === "reviewed" ?> -->
-                                    <?php if ($h->status === "reviewed"): ?>
-                                        <span class="text-[#E178C5]">Reviewed</span>
-                                    <?php elseif ($h->status === "verified"): ?>
-                                        <span class="text-green-500">Verified</span>
-                                    <?php else: ?>
-                                        <span class="text-red-500">Rejected</span>
-                                    <?php endif ?>
-                                </td>
+                            </td>
+                            <td>
+                                <!-- <?= ucfirst($h->status) === "reviewed" ?> -->
+                                <?php if ($h->status === "reviewed"): ?>
+                                <span class="text-[#E178C5]">Reviewed</span>
+                                <?php elseif ($h->status === "verified"): ?>
+                                <span class="text-green-500">Verified</span>
+                                <?php else: ?>
+                                <span class="text-red-500">Rejected</span>
+                                <?php endif ?>
+                            </td>
 
-                                <td>
-                                    <a href="./detail.php?id=<?= $h->id ?>"
-                                        class="btn btn-sm btn-secondary font-normal">Detail</a>
-                                </td>
-                            </tr>
+                            <td>
+                                <a href="./detail.php?id=<?= $h->id ?>"
+                                    class="btn btn-sm btn-secondary font-normal">Detail</a>
+                            </td>
+                        </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -229,7 +229,7 @@ $histories = History::with("user:id,username,nama")->get();
 
 
     <script>
-        new DataTable("#histories");
+    new DataTable("#histories");
     </script>
 
 </body>

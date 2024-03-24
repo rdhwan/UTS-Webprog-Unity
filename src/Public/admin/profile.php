@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         <div class="hidden md:flex flex-row items-center gap-8">
-            <a href="/src/Public/admin/index.php">
+            <a href="/admin/index.php">
                 <img src="../images/logo.png" class="w-36 md:w-24" />
             </a>
 
@@ -98,17 +98,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <?php if (!empty ($user["profile_picture"])): ?>
-                    <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
-                <?php else: ?>
-                    <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
-                <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
                     </p>
                     <p class="font-light text-[#E178C5]/50">Admin</p>
                 </div>
+                <?php if (!empty ($user["profile_picture"])): ?>
+                <img src="../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <?php else: ?>
+                <img src="../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <?php endif; ?>
             </summary>
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                 <div class="flex md:hidden flex-col p-4">
@@ -154,11 +154,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="md:flex flex-column md:justify-between">
                     <div class="flex">
                         <?php if (!empty ($user["profile_picture"])): ?>
-                            <img src="../images/profile/<?= $user["profile_picture"] ?>"
-                                class="w-20 h-20 object-cover mr-5 rounded-full" />
+                        <img src="../images/profile/<?= $user["profile_picture"] ?>"
+                            class="w-20 h-20 object-cover mr-5 rounded-full" />
                         <?php else: ?>
-                            <img src="../images/profile/dummyProfile.svg"
-                                class="w-20 h-20 object-cover mr-5 rounded-full" />
+                        <img src="../images/profile/dummyProfile.svg"
+                            class="w-20 h-20 object-cover mr-5 rounded-full" />
                         <?php endif; ?>
                         <div class="flex items-center">
                             <div class="md:flex flex-col items-start text-lg">
@@ -194,9 +194,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                         aria-label="Choose file">
                                 </label>
                                 <?php if (!empty ($error)): ?>
-                                    <p class="text-red-500">
-                                        <?php echo $error; ?>
-                                    </p>
+                                <p class="text-red-500">
+                                    <?php echo $error; ?>
+                                </p>
                                 <?php endif; ?>
                                 <button type="submit"
                                     class="shadow-lg mt-1 flex justify-center items-center h-[2rem] w-[5rem] p-3 bg-gradient-to-r from-[#E178C5] to-[#FFB38E] rounded-[0.5rem] text-[#FFFDCB] font-bold text-sm"

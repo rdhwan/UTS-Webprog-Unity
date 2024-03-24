@@ -67,7 +67,7 @@ $users = User::where("role", "=", "nasabah")->get();
 
 
         <div class="hidden md:flex flex-row items-center gap-8">
-            <a href="/src/Public/admin/index.php">
+            <a href="/admin/index.php">
                 <img src="../../images/logo.png" class="w-36 md:w-24" />
             </a>
 
@@ -80,17 +80,17 @@ $users = User::where("role", "=", "nasabah")->get();
 
         <details class="dropdown dropdown-end">
             <summary class="btn btn-link no-underline hover:no-underline">
-                <?php if (!empty ($user["profile_picture"])): ?>
-                <img src="../../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
-                <?php else: ?>
-                <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
-                <?php endif; ?>
                 <div class="hidden md:flex flex-col items-start">
                     <p class="font-semibold text-[#E178C5]">
                         <?= $user["nama"] ?>
                     </p>
                     <p class="font-light text-[#E178C5]/50">Admin</p>
                 </div>
+                <?php if (!empty ($user["profile_picture"])): ?>
+                <img src="../../images/profile/<?= $user["profile_picture"] ?>" class="w-14 md:w-11 rounded-full" />
+                <?php else: ?>
+                <img src="../../images/profile/dummyProfile.svg" class="w-14 md:w-11 rounded-full" />
+                <?php endif; ?>
             </summary>
             <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
                 <div class="flex md:hidden flex-col p-4">
