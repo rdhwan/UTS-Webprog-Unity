@@ -5,7 +5,7 @@
 require_once __DIR__ . "/../../../Middleware/checkAdmin.php";
 
 $id = $_GET["id"];
-$tabungan = $_GET["tabungan"] ?? "pokok";
+$kategori = $_GET["tabungan"] ?? "pokok";
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,7 +28,8 @@ if ($nasabah === null) {
     exit;
 }
 
-$tabungan = $nasabah->histories()->where("kategori", "=", $tabungan)->first();
+$tabungan = $nasabah->histories()->where("kategori", "=", $kategori)->get()->sum("jumlah");
+$pokok = $nasabah->histories()->where("kategori", "=", "pokok")->first();
 
 ?>
 
@@ -172,14 +173,15 @@ $tabungan = $nasabah->histories()->where("kategori", "=", $tabungan)->first();
                 <div class="md:flex flex-column ">
                     <div class="flex flex-col w-full">
                         <p class="text-[#E178C5] mt-5 font-bold">Payment Proof</p>
-                        <p class="text-[#FF8E8F]">Download Image to View</p>
+                        <p class="text-[#FF8E8F]">Download Bukti Pokok</p>
                         <div class="flex mt-3 items-center">
                             <i class="ph ph-download-simple opacity-35 text-2xl"></i>
-                            <a href="../../images/bukti/<?= $tabungan["bukti"] ?>" target="_blank"
+                            <a href="<?= "../../images/bukti/{$pokok->bukti}"?>" target="_blank"
                                 class="shadow-lg mt-1 ms-2 flex px-2 py-1 justify-center items-center w-36 bg-[#D9D9D9] rounded-[0.5rem] text-[#00000035] text-sm"
                                 aria-label="Save">
                                 Download File
                             </a>
+
                         </div>
                     </div>
 
@@ -189,7 +191,7 @@ $tabungan = $nasabah->histories()->where("kategori", "=", $tabungan)->first();
                         <div class="dropdown">
                             <div tabindex="0" role="button"
                                 class="btn btn-sm w-full max-w-xs bg-[#FF8E8F] text-[#FFFDCB] rounded-t-md font-bold">
-                                Tabungan <?= ucfirst($tabungan["kategori"]) ?> <i class="ph-fill ph-caret-down"></i>
+                                Tabungan <?= ucfirst($kategori) ?> <i class="ph-fill ph-caret-down"></i>
                             </div>
                             <ul tabindex="0"
                                 class="dropdown-content z-[1] menu p-2 shadow rounded-box w-full bg-[#FF8E8F]">
@@ -211,7 +213,7 @@ $tabungan = $nasabah->histories()->where("kategori", "=", $tabungan)->first();
 
                         <div
                             class="flex justify-center items-center w-full h-[2rem] p-3 bg-[#F6F6F6] rounded-b-lg text-[#FF8E8F] font-bold text-sm shadow-lg ">
-                            Rp. <?= number_format($tabungan["jumlah"], 0, ",", ".") ?>,-
+                            Rp. <?= number_format($tabungan, 0, ",", ".") ?>,-
                         </div>
                     </div>
                 </div>
